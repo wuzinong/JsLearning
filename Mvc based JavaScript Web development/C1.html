@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chapter1</title>
+</head>
+<body>
+	
+
+	<script type="text/javascript">
+		//Adding methods for class
+		//Using extend() and include()
+		var Class = function(){
+			 var klass = function(){
+			 	 this.init.apply(this,arguments);
+			 };
+			 klass.prototype.init = function(){};
+			 klass.fn = klass.prototype;
+			 klass.fn.parent = klass;
+
+			 //adding attributes for class
+			 klass.extend = function(obj){
+			 	 var extended = obj.extended;
+			 	 for(var i in obj){
+			 	 	 klass[i] = obj[i];
+			 	 }
+			 	 if(extended) extended(klass);
+			 }//将方法或属性挂在到类上面，相当于私有，类.名调用。
+
+			 //adding attributes for instance
+			 klass.include = function(obj){
+			 	 var included = obj.included;
+			 	 for(var i in obj){
+			 	 	 klass.fn[i] = obj[i];
+			 	 };
+			 }//klass.fn指向klass.prototype那么当new一个实例的时候没份实例有单独的方法（继承自原型链）
+			  return klass;
+		}
+
+		var Person = new Class;
+		Person.extend({
+			find:function(id){ console.log("find a person")},
+			exists:function(id){console.log("person exitsts")}
+		});
+
+		var person = Person.find(1);
+		//所以new Person().find是调不到的，因为属性通过extend方法挂载到类上面相当于私有方法
+		var Person2 = new Class;
+		Person2.include({
+			save:function(id){ console.log("this id has been saved")},
+			destory:function(id){console.log("this has been destoryed")}
+		});
+		var person = new Person2();
+		person.save(1);//这里通过Include方法挂载到原型链上面，所以New出来的能调到。
+	</script>
+
+</body>
+</html>
