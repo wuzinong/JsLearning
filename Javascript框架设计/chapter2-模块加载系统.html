@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>chapter2</title>
+</head>
+<body>
+	
+
+	<script type="text/javascript">
+		 //AMD规范
+		 //define(id?,deps?,factory)
+		 define("xxx",["aaa","bbb"],function(aaa,bbb){
+
+		 });
+		 //require(deps,callback)
+		 require(["aaa","bbb"],function(aaa,bbb){
+
+		 });
+
+		 //URL和合成规则为
+		 //basePath + 模块ID + ".js"
+		 function getBasePath(){
+		 	 var nodes = document.getElementsByTagName("script");
+		 	 var node = nodes[nodes.length -1];
+		 	 var src = document.querySelector ? node.src : node.getAttribute("src",4);
+		 	 return src;
+		 }
+
+		 require.config({
+		 	 alias:{
+		 	 	'lang':'http://common.cnblogs.com/scripts/mass/lang.js',
+		 	 	'jquery':{
+		 	 		src:"http://common.cnblogs.com/script/jquery.js",
+		 	 		exports:"$"
+		 	 	},
+		 	 	'jquery.tooltip':{
+		 	 		src:'http://common.cnblogs.com/script/ui/tooltip.js',
+		 	 		exports:"$",
+		 	 		deps:["jquery"]
+		 	 	}
+		 	 }
+		 });
+
+
+		 window.require = $.require = function(list,factory,parent){
+		 	//用于检测它的依赖是否都为2
+		 	 var deps = [],
+		 	 //用于保存依赖模块的返回值
+		 	 	 args = [],
+		 	 //需要安装的模块数
+		 	 	 dn = 0,
+		 	 //已安装的模块数
+		 	 	 cn = 0,
+		 	 	 id = parent || "callback" + setTimeout("1");
+		 	 parent = parent || basepath;//basepath为加载器的路径
+		 	 String(list).replace($.rword,function(el){
+		 	 	 var url = loadJSCSS(el,parent);
+		 	 	 if(url){
+		 	 	 	 dn++;
+		 	 	 	 if(modules[url] && modules[url].state === 2){
+		 	 	 	 	 cn++;
+		 	 	 	 }
+		 	 	 	 if(!deps[url]){
+		 	 	 	 	 args.push(url);
+		 	 	 	 	 deps[url] = "test";//去重
+		 	 	 	 }
+		 	 	 }
+		 	 });
+		 	 modules[id] = {//创建一个对象，记录模块的加载情况与其他信息
+		 	 	  id:id,
+		 	 	  factory:factory,
+		 	 	  deps:deps,
+		 	 	  args:args,
+		 	 	  state:1
+		 	 };
+		 	 if(dn === cn){//如果需要安装的等于已安装好的
+		 	 	 fireFactory(id,args,factory);//安装到框架中
+		 	 }else{
+		 	 	 //放到检测队列中，等待checkDeps处理
+		 	 	 loadings.unshift(id);
+		 	 }
+		 	 checkDeps();
+		 }
+
+		 function loadJSCSS(url,parent,ret,shim){
+		 	 //特别处理mass|ready标识符
+		 	 if(/^(mass|ready)$/.test(url)){
+		 	 	 return url;
+		 	 }
+		 	 //转化完整路径
+		 	 if($.config.alias[url]){
+		 	 	 ret = $.config.alias[url];
+		 	 	 if(typeof ret === "object"){
+		 	 	 	 shim = ret;
+		 	 	 	 ret = ret.src;
+		 	 	 }
+		 	 }else{
+		 	 	 if(/^(\w+)(\d)?:.*/.test(url)){//本来就是完整路径
+		 	 	 	 ret = url
+		 	 	 }else{
+		 	 	 	 parent = parent.substr(0,parent.lastIndexOf('/'));
+		 	 	 	 var tmp = url.charAt(0);
+		 	 	 	 if(tmp !== "." && temp !=== "/"){//相对子路径
+		 	 	 	 	 ret = basepath + url;
+		 	 	 	 }else if(url.slice(0,2) === ".."){//相对父路径
+		 	 	 	 	 var arr = parent.replace(/\/$/,"").split("/");
+		 	 	 	 	 temp = url.replace(/\.\.\//g,function(){
+		 	 	 	 	 	arr.pop();
+		 	 	 	 	 	return "";
+		 	 	 	 	 });
+		 	 	 	 	 ret = arr.join("/") + "/"+tmp;
+		 	 	 	 }else if(tmp === "/"){
+		 	 	 	 	 ret = parent + url;//相对于兄弟路径
+		 	 	 	 }else{
+		 	 	 	 	 $.error("Not match the rules"+url);
+		 	 	 	 }
+		 	 	 }
+		 	 }
+		 	 var src = ret.replace(/[?#].*/,""),ext;
+		 	 if(/\.(css|js)$/.test(src)){
+		 	 	 ext = RegExp.$1;
+		 	 }
+		 	 if(!ext){//如果没有后缀名，加上后缀
+		 	 	src += '.js';
+		 	 	ext = "js";
+		 	 }
+		 	 if(ext === "js"){
+		 	 	 if(!modules[src]){//如果之前没有加载过
+		 	 	 	 modules[src] = {
+		 	 	 	 	 id:src,
+		 	 	 	 	 parent:parent,
+		 	 	 	 	 exports:{}
+		 	 	 	 }
+		 	 	 };
+		 	 	 if(shim){//shim机制
+		 	 	 	 reqiure(shim.deps || "",function(){
+		 	 	 	 	 loadJS(src,function(){
+		 	 	 	 	 	 modules[src].state = 2;
+		 	 	 	 	 	 modules[src].exports = typeof shim.exports==="function"?
+		 	 	 	 	 	 shim.exports() : window[shim.exports];
+		 	 	 	 	 	 checkDeps();
+		 	 	 	 	 });
+		 	 	 	 });
+		 	 	 }else{
+		 	 	 	 loadJS(src);
+		 	 	 }
+		 	 }
+		 	 return src;
+		 	}else{
+		 		loadCSS(src);
+		 	}
+		 }
+
+		 function loadJS(url,callback){
+		 	//通过script节点加载模板模块
+		 	 var node = DOC.createElement("script");
+		 	 //让getCurrentScript只处理类名为moduleClass的script节点
+		 	 node.className = moduleClass;
+		 	 node[W3C ? "onload":"onreadystateChange"]=function(){
+		 	 	 if(W3C || /loaded|complete/i.test(node.readyState)){
+		 	 	 //factorys里面装着define方法的工厂函数(define(id?,deps?,factory))
+		 	 	 	var factory = factorys.pop();
+		 	 	 	factory && factory.delay(node.src);
+		 	 	 	if(callback){
+		 	 	 		 callback();
+		 	 	 	}
+		 	 	 	if(checkFail(node,false,!W3C)){
+		 	 	 		 $.log("已成功加载"+node.src,7);
+		 	 	 	}
+		 	 	 }
+		 	 };
+		 	 node.onerror = function(){
+		 	 	 checkFail(node,true);
+		 	 };
+		 	 //插入到head的第一个节点前，防止ie6下head标签没闭合前使用appendChild抛错
+		 	 node.src = url;
+		 	 head.insertBefore(node,head.firstChild);
+		 }
+
+		 function checkFail(node,onError,fuckIE){
+		 	 var id = node.src;//检测是否死链
+		 	 node.onload = node.onreadystatechange = node.onerror = null;
+		 	 if(onError || (fuckIE && !modules[id].state)){
+		 	 	 setTimeout(function(){
+		 	 	 	head.removeChild(node);
+		 	 	 });
+		 	 	 $.log("加载 "+id+" 失败"+onError+" "+(!modules[id].state),7);
+		 	 }else{
+		 	 	return true;
+		 	 }
+		 }
+
+		 function checkDeps(){
+		 	 loop:for(var i=loadings.length,id;id=loadings[--i];){
+		 	 	var obj = modules[id],deeps = obj.deps;
+		 	 	for(var key in deps){
+		 	 		 if(hasOwn.call(deps,key) && modules[key].state !== 2){
+		 	 		 	  continue loop;
+		 	 		 }
+		 	 	}
+		 	 	//如果deps是空对象或者其依赖的模块状态都是2
+		 	 	if(obj.state !== 2){
+		 	 		//先移除在安装，防止IE下DOM树建完后手动刷新页面，会多次执行它
+		 	 		 loadings.splice(i,1);
+		 	 		 fireFactory(obj.id,obj.args,obj.factory);
+		 	 		 //如果成功，则再执行一次，以防有些模块就差本模块没有安装好
+		 	 		 checkDeps();
+		 	 	}
+		 	 }
+		 }
+
+		 function fireFactory(id,deps,factory){
+		 	 for(var i=0,array=[],d;d=deps[i++];){
+		 	 	 array.push(modules[d].exports);
+		 	 }
+		 	 var module = Object(modules[id]),
+		 	     ret = factory.apply(global,array);
+		 	 module.state = 2;
+		 	 if(ret !== void 0){
+		 	 	 modules[id].exports = ret;
+		 	 }
+		 	 return ret;
+		 }
+
+		 // define 方法
+		 window.define = $.define = function(id,deps,factory){
+		 	 var args = $.slice(arguments);
+		 	 if(typeof id === "string"){
+		 	 	var _id = args.shift();
+		 	 }
+		 	 if(typeof args[0] === "boolean"){//用于文件合并，在标准浏览器中跳过补丁模块
+		 	 	 if(args[0]){
+		 	 	 	 return;
+		 	 	 }
+		 	 	 args.shift();
+		 	 }
+		 	 if(typeof args[0] === "function"){
+		 	 	 args.unshift([]);
+		 	 }
+		 	 //上线合并后直接得到模块ID，否则寻找当前正在解析中的script节点的src作为模块ID
+		 	 //现在除了Safari外，我们都能直接通过getCurrentScript一步到位得到当前执行的script节点
+		 	 //Safari可通过onload+delay闭包组合解决
+		 	 id = modules[id] && modules[id].state >= 1 ? _id : getCurrentScript();
+		 	 factory = args[1];
+		 	 factory.id = _id;//用于测试
+		 	 factory.delay = function(id){
+		 	 	 args.push(id);
+		 	 	 var isCycle = true;
+		 	 	 try{
+		 	 	 	isCycle = checkCycle(modules[id].deps,id);
+		 	 	 }catch(e){
+
+		 	 	 }
+		 	 	 if(isCycle){
+		 	 	 	 $.error(id + "模块与之前的某些模块存在循环依赖");
+		 	 	 }
+		 	 	 delete factory.delay; //释放内存
+		 	 	 require.apply(null,args);//0,1,2 --> 1,2,0
+		 	 };
+		 	 if(id){
+		 	 	 factory.delay(id,args);
+		 	 }else{
+		 	 	 factory.push(factory);
+		 	 }
+		 }
+
+		 function checkCycle(deps,nick){
+		 	//检测是否存在循环依赖
+		 	 for(var id in deps){
+		 	 	 if(deps[id] === "test" && modules[id].state !== 2&& (id===nick
+		 	 	 	|| checkCycle(modules[id].deps,nick))){
+		 	 	 	 return true;
+		 	 	 }
+		 	 }
+		 }
+	</script>
+</body>
+</html>

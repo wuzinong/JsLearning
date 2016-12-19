@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>chapter3</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function contains(target,it){
+			return target.indexOf(it) != -1;
+		}
+
+		function contains2(target,str,separator){
+			 return separator ?
+			 (separator + target + separator).indexOf(separator + str + separator) > -1 :
+			 target.indexOf(str) > -1;
+		}
+
+		function startWith(target,str,ignorecase){
+			 var start_str = target.substr(0,str.length);
+			 return ignorecase ? start_str.toLowerCase()===str.toLowerCase() :
+			        start_str === str;
+		}
+
+		function endWith(target,str,ignorecase){
+			 var end_str = target.substring(target.length-str.length);
+			 return ignorecase ? end_str.toLowerCase() === str.toLowerCase() :
+			        end_str === str;
+		}
+
+		//repeat，将一个字符串重复自身N次
+		function repeat(target,n){
+			return new Array(n+1).join(target);//利用数组的join方法
+		}
+        //创建一个拥有length属性的对象，然后调用call方法来调用原型链上的join方法
+        //省去创建数组这一步，重复次数越多，性能提高越大，length属性值为非负整数
+		function repeat2(target,n){
+ 			return Array.prototype.join.call({
+ 				 length:n+1
+ 			},target);
+		}
+		//利用闭包将原型链上的join方法缓存起来
+		var repeat3 = (function(){
+			var join = Array.prototype.join,obj = {};
+			return function(target,n){
+				 obj.length = n+1;
+				 return join.call(obj,target);
+			}
+		})();
+		//从算法上着手，使用二分法，比如将ruby重复5次，其实我们在第二次
+		//已得到rubyruby，那么第三次直接用rubyruby进行操作，而不是用ruby
+		function repeat(target,n){
+			var s = target,total = [];
+			while(n>0){
+				if(n%2==1)
+					total[total.length] = s;//奇数
+				if(n==1)
+					break;
+				s+=s;
+				n = n >> 1;//相当于将n除以2取其商，或说开2次方
+			}
+			return total.join('');
+		}
+		//
+		function repeat(target,n){
+			 if(n==1){
+			 	 return target;
+			 }
+			 var s = repeat(target,Math.floor(n/2));
+			 s += s;
+			 if(n%2){
+			 	 s += target;
+			 }
+			 return s;
+		}
+		//byteLen获取一个字符串所有字节的长度，char,varchar,text占一个字节，中文2个
+		function byteLen(target){
+			 var byteLength = target.length,i=0;
+			 for(;i < target.length; i++){
+			 	 if(target.charCodeAt(i) > 255){
+			 	 	//遇到unicode编码大于255的补加1
+			 	 	 byteLength++;
+			 	 }
+			 }
+			 return byteLength;
+		}
+		//使用正则，并支持指定汉字的存储字节数,比如mysql存储汉字时，使用的是3个字节
+		function byteLen(target,fix){
+			 fix = fix ? fix : 2;
+			 var str = new Array(fix+1).join("-");
+			 return target.replace(/[^\x00-\xff]/g,str).length;
+		}
+		//truncate方法用于对字符串进行截断处理，当超过限定长度，默认添加3个点号或其他
+		function truncate(target,length,truncation){
+			 length = length || 30;
+			 truncation = truncation=== void(0) ? '...' : truncation;
+			 return target.length > length ?
+			 	target.slice(0,length - truncation.length) + truncation : String(target);
+		}
+		//camelize 转换为驼峰风格
+		function camelize(target){
+			 if(target.indexOf("-") < 0 && target.indexOf("_") < 0){
+			 	  return target;//提前判断，提高get
+			 }
+			 return target.replace(/[-_][^-_]/g,function(match){
+			 	  return match.charAt(1).toUpperCase();
+			 })
+		}
+		//underscored方法，转换为下划线风格
+		function underscored(target){
+			 return target.replace(/([a-z\d])([A-Z])/g,'$1_$2').
+			 	    replace(/\-/g,'_').toLowerCase();
+		}
+		//dasherize 转换为连字符风格，亦即CSS变量的风格
+		function dasherize(target){
+			 return underscored(target).replace(/_/g,'-');
+		}
+		//capitalize方法，首字母大写
+		function capitalize(target){
+			 return target.charAt(0).toUpperCase() + target.substring(1).toLowerCase();
+		}
+		//stripTags方法，移除字符串中的Html标签
+		//缺陷，如果有script标签，会把这些不该显示出来的脚本也显示出来
+		function stripTags(target){
+			return String(target || "").replace(/<[^>]+>/g,'');
+		}
+		//stripScripts方法，移除字符串中所有的script标签
+		//弥补stripTags方法的缺陷，此方法应子啊stripTags之前调用
+		function scriptScripts(target){
+			 return String(target || "")
+			       .replace(/<script[^>]*>([\S\s]*?)<\/script>/img,'');
+		}
+		//escapeHTML 将字符串经过html转义得到适合在页面中显示的内容
+		function escapeHTML(target){
+			 return target.replace(/&/g,'&amp;')
+			 	    .replace(/</g,"&lt;")
+			 	    .replace(/>/g,"&gt;")
+			 	    .replace(/"/g,"&quot;")
+			 	    .replace(/'/g,"&#39;");
+		}
+		//unescapeHTML 将html实体字符还原为对应字符
+		function unescapeHTML(target){
+			 return target.replace(/&quot;/g,'"')
+			 	     .replace(/&lt;/g,'<')
+			 	     .replace(/&gt;/g,'>')
+			 	     .replace(/&amp;/g,"&")
+			 	     .replace(/&#([\d]+);/g,function($0,$1){
+			 	     	 return String.fromCharCode(parseInt($1,10));
+			 	     });
+		}
+		//escapeRegExp 将字符串安全格式化为正则表达式的源码
+		function escapeRegExp(target){
+			return target.replace(/([-.*+?^${}() | [\]\/\\])/g,'\\$1');
+		}
+		//pad 位字符串的某一端添加字符串
+		function pad(target,n){
+			 var zero = new Array(n).join('0');
+			 var str = zero + target;
+			 var result = str.substr(-n);
+			 return result;
+		}
+
+		function Pad(target,n){
+			return Array(n+1) - target.toString().split('').length.join('0')+target;
+		}
+
+		function format (str,object){
+			 var array = Array.prototype.slice.call(arguments,1);
+			 return str.replace(/\\?\#/)
+		}
+		//...
+	</script>
+</body>
+</html>
