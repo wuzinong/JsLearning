@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象</title>
+</head>
+<body>
+ 
+	<script type="text/javascript">
+		  //复制对象
+      // 对于JSON 安全（也就是说可以被序列化为一个JSON 字符串并且可以根据这个字符串解
+      // 析出一个结构和值完全一样的对象）的对象来说，有一种巧妙的复制方法
+      var newObj = JSON.parse( JSON.stringify( someObj ) );
+      //如果对象中有function或者undefined等，会被过滤掉，只适用于json安全的对象
+	</script>
+</body>
+</html>
