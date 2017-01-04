@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>原型</title>
+</head>
+<body>
+ 
+	<script type="text/javascript">
+		  //Object.prototype
+//       所有普通的[[Prototype]] 链最终都会指向内置的Object.prototype。由于所有的“普通”
+// （内置，不是特定主机的扩展）对象都“源于”（或者说把[[Prototype]] 链的顶端设置为）
+// 这个Object.prototype 对象，所以它包含JavaScript 中许多通用的功能。
+      //　属性设置和屏蔽
+       myObject.foo = "bar";
+    // 如果myObject 对象中包含名为foo 的普通数据访问属性，这条赋值语句只会修改已有的属性值。
+    // 如果foo 不是直接存在于myObject 中，[[Prototype]] 链就会被遍历，类似[[Get]] 操作。
+    // 如果原型链上找不到foo，foo 就会被直接添加到myObject 上。
+    // 如果属性名foo 既出现在myObject 中也出现在myObject 的[[Prototype]] 链上层， 那
+    // 么就会发生屏蔽。myObject 中包含的foo 属性会屏蔽原型链上层的所有foo 属性，因为
+    // myObject.foo 总是会选择原型链中最底层的foo 属性。
+    // 
+    // 屏蔽比我们想象中更加复杂。下面我们分析一下如果foo 不直接存在于myObject 中而是存
+    // 在于原型链上层时myObject.foo = "bar" 会出现的三种情况。
+    // 1. 如果在[[Prototype]] 链上层存在名为foo 的普通数据访问属性（参见第3 章）并且没
+    // 有被标记为只读（writable:false），那就会直接在myObject 中添加一个名为foo 的新
+    // 属性，它是屏蔽属性。
+    // 2. 如果在[[Prototype]] 链上层存在foo，但是它被标记为只读（writable:false），那么
+    // 无法修改已有属性或者在myObject 上创建屏蔽属性。如果运行在严格模式下，代码会
+    // 抛出一个错误。否则，这条赋值语句会被忽略。总之，不会发生屏蔽。
+    // 3. 如果在[[Prototype]] 链上层存在foo 并且它是一个setter（参见第3 章），那就一定会
+    // 调用这个setter。foo 不会被添加到（或者说屏蔽于）myObject，也不会重新定义foo 这
+    // 个setter。
+    // 如果你希望在第二种和第三种情况下也屏蔽foo，那就不能使用= 操作符来赋值，而是使
+    //用Object.defineProperty(..)（参见第3 章）来向myObject 添加foo。
+    // 第二种情况可能是最令人意外的，只读属性会阻止[[Prototype]] 链下层
+    // 隐式创建（屏蔽）同名属性。这样做主要是为了模拟类属性的继承。你可
+    // 以把原型链上层的foo 看作是父类中的属性，它会被myObject 继承（复
+    // 制），这样一来myObject 中的foo 属性也是只读，所以无法创建。但是一定
+    // 要注意，实际上并不会发生类似的继承复制（参见第4 章和第5 章）。这看
+    // 起来有点奇怪，myObject 对象竟然会因为其他对象中有一个只读foo 就不
+    // 能包含foo 属性。更奇怪的是，这个限制只存在于= 赋值中，使用Object.
+    // defineProperty(..) 并不会受到影响。
+    // 
+    // 有些情况下会隐式产生屏蔽，一定要当心。思考下面的代码：
+      var anotherObject = {
+      a:2
+      };
+      var myObject = Object.create( anotherObject );
+      anotherObject.a; // 2
+      myObject.a; // 2
+      anotherObject.hasOwnProperty( "a" ); // true
+      myObject.hasOwnProperty( "a" ); // false
+      myObject.a++; // 隐式屏蔽！
+      anotherObject.a; // 2
+      myObject.a; // 3
+      myObject.hasOwnProperty( "a" ); // true
+
+      //“类”函数
+      //多年以来，JavaScript 中有一种奇怪的行为一直在被无耻地滥用，那就是模仿类。我们会
+      // 仔细分析这种方法。 这种奇怪的“类似类”的行为利用了函数的一种特殊特性：所有的函数默认都会拥有一个
+      // 名为prototype 的公有并且不可枚举（参见第3 章）的属性，它会指向另一个对象：
+      function Foo() {
+      // ...
+      }
+      Foo.prototype; // { }
+
+  //     最直接的解释就是，这个对象是在调用new Foo()（参见第2 章）时创建的，最后会被
+  // （有点武断地）关联到这个“Foo 点prototype”对象上。
+    function Foo() {
+    // ...
+    }
+    var a = new Foo();
+    Object.getPrototypeOf( a ) === Foo.prototype; // true
+
+    // 实际上，绝大多数JavaScript 开发者不知道的秘密是，new Foo() 这个函数调用实际上并没
+    // 有直接创建关联，这个关联只是一个意外的副作用。new Foo() 只是间接完成了我们的目
+    // 标：一个关联到其他对象的新对象。
+       function Foo() {
+      // ...
+      }
+      Foo.prototype.constructor === Foo; // true
+      var a = new Foo();
+      a.constructor === Foo; // true
+
+      // 之前讨论.constructor 属性时我们说过，看起来a.constructor === Foo 为真意味着a 确
+      // 实有一个指向Foo 的.constructor 属性，但是事实不是这样。
+      // 这是一个很不幸的误解。实际上，.constructor 引用同样被委托给了Foo.prototype，而
+      // Foo.prototype.constructor 默认指向Foo。
+    //   实际上，对象的.constructor 会默认指向一个函数，这个函数可以通过对象的.prototype
+    // 引用。“constructor”和“prototype”这两个词本身的含义可能适用也可能不适用。最好的
+    // 办法是记住这一点“constructor 并不表示被构造”。
+    // .constructor 并不是一个不可变属性。它是不可枚举（参见上面的代码）的，但是它的值
+    // 是可写的（可以被修改）。此外，你可以给任意[[Prototype]] 链中的任意对象添加一个名
+    // 为constructor 的属性或者对其进行修改，你可以任意对其赋值。
+    // 
+    // 下面这段代码使用的就是典型的“原型风格”
+       function Foo(name) {
+        this.name = name;
+        }
+        Foo.prototype.myName = function() {
+        return this.name;
+        };
+        function Bar(name,label) {
+        Foo.call( this, name );
+        this.label = label;
+        }
+        // 我们创建了一个新的Bar.prototype 对象并关联到Foo.prototype
+        Bar.prototype = Object.create( Foo.prototype );
+        // 注意！现在没有Bar.prototype.constructor 了
+        // 如果你需要这个属性的话可能需要手动修复一下它
+        Bar.prototype.myLabel = function() {
+        return this.label;
+        };
+        var a = new Bar( "a", "obj a" );
+        a.myName(); // "a"
+        a.myLabel(); // "obj a"
+        // 这段代码的核心部分就是语句Bar.prototype = Object.create( Foo.prototype )。调用
+        // Object.create(..) 会凭空创建一个“新”对象并把新对象内部的[[Prototype]] 关联到你
+        // 指定的对象（本例中是Foo.prototype）。
+        // 声明function Bar() { .. } 时，和其他函数一样，Bar 会有一个.prototype 关联到默认的
+        // 对象，但是这个对象并不是我们想要的Foo.prototype。因此我们创建了一个新对象并把
+        // 它关联到我们希望的对象上，直接把原始的关联对象抛弃掉。
+        // 注意，下面这两种方式是常见的错误做法，实际上它们都存在一些问题：
+         // 和你想要的机制不一样！
+        Bar.prototype = Foo.prototype;
+        // 基本上满足你的需求，但是可能会产生一些副作用 :(
+        Bar.prototype = new Foo();
+        // Bar.prototype = Foo.prototype 并不会创建一个关联到Bar.prototype 的新对象，它只
+        // 是让Bar.prototype 直接引用Foo.prototype 对象。因此当你执行类似Bar.prototype.
+        // myLabel = ... 的赋值语句时会直接修改Foo.prototype 对象本身。显然这不是你想要的结
+        // 果，否则你根本不需要Bar 对象，直接使用Foo 就可以了，这样代码也会更简单一些。
+         // Bar.prototype = new Foo() 的确会创建一个关联到Bar.prototype 的新对象。但是它使用
+         //  了Foo(..) 的“构造函数调用”，如果函数Foo 有一些副作用（比如写日志、修改状态、注
+         //  册到其他对象、给this 添加数据属性，等等）的话，就会影响到Bar() 的“后代”，后果
+         //  不堪设想。
+         //  因此，要创建一个合适的关联对象，我们必须使用Object.create(..) 而不是使用具有副
+      // 作用的Foo(..)。这样做唯一的缺点就是需要创建一个新对象然后把旧对象抛弃掉，不能
+      // 直接修改已有的默认对象。
+      //  如果能有一个标准并且可靠的方法来修改对象的[[Prototype]] 关联就好了。在ES6 之前，
+      // 我们只能通过设置.__proto__ 属性来实现，但是这个方法并不是标准并且无法兼容所有浏
+      // 览器。ES6 添加了辅助函数Object.setPrototypeOf(..)，可以用标准并且可靠的方法来修
+      // 改关联。
+      // 我们来对比一下两种把Bar.prototype 关联到Foo.prototype 的方法：
+      
+       // ES6 之前需要抛弃默认的Bar.prototype
+    Bar.ptototype = Object.create( Foo.prototype );
+    // ES6 开始可以直接修改现有的Bar.prototype
+    Object.setPrototypeOf( Bar.prototype, Foo.prototype );
+
+    //Object.create的polyfill代码
+    if(!Object.create){
+       Object.create = function(o){
+          function F(){}
+          F.prototype = o;
+          return new F();
+       }
+    }
+
+//     Object.create(..) 的第二个参数指定了需要添加到新对象中的属性名以及这些属性的属性
+// 原型 ｜ 161
+// 描述符（参见第3 章）。因为ES5 之前的版本无法模拟属性操作符，所以polyfill 代码无法
+// 实现这个附加功能。
+    var anotherObject = {
+      a:2
+      };
+      var myObject = Object.create( anotherObject, {
+      b: {
+      enumerable: false,
+      writable: true,
+      configurable: false,
+      value: 3
+      },
+      c: {
+      enumerable: true,
+      writable: false,
+      configurable: false,
+      value: 4
+      }
+      });
+      myObject.hasOwnProperty( "a" ); // false
+      myObject.hasOwnProperty( "b" ); // true
+      myObject.hasOwnProperty( "c" ); // true
+      myObject.a; // 2
+      myObject.b; // 3
+      myObject.c; // 4
+  	</script>
+</body>
+</html>

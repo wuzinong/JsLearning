@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>行为委托</title>
+</head>
+<body>
+ 
+	<script type="text/javascript">
+		  //下面是推荐的代码形式，非常简单：
+      Task = {
+         setID:function(ID){this.id = ID;},
+         outputID:function(){
+            console.log(this.id);
+         }
+      };
+      XYZ = Object.create(Task);
+      XYZ.prepareTask = function(ID,Label){
+          this.setID(ID);
+          this.label = Label;
+      }
+      XYZ.outputTaskDetails = function(){
+          this.outputID();
+          console.log(this.label);
+      }
+
+      //Chrome 是不是直接输出了对象的.constructor.name 呢？令人迷惑的是，答案是“既是又
+     //不是”。
+        function Foo() {}
+        var a1 = new Foo();
+        a1.constructor; // Foo(){}
+        a1.constructor.name; // "Foo"
+    // 即使我们把a1.constructor.name 修改为另一个合理的值（Gotcha），Chrome 控制台仍然会
+    // 输出Foo。
+      function Foo() {}
+      var a1 = new Foo();
+      Foo.prototype.constructor = function Gotcha(){};
+      a1.constructor; // Gotcha(){}
+      a1.constructor.name; // "Gotcha"
+      a1; // Foo {}
+
+//     啊哈！抓到你了（Gotcha 的意思就是抓到你了）！本例中Chrome 的控制台确实使用
+// 了.constructor.name。实际上，在编写本书时，这个行为被认定是Chrome 的一个bug，
+// 当你读到此书时，它可能已经被修复了。所以你看到的可能是a1; // Object {}
+      var Foo = {};
+      var a1 = Object.create( Foo );
+      a1; // Object {}
+      Object.defineProperty( Foo, "constructor", {
+      enumerable: false,
+      value: function Gotcha(){}
+      });
+      a1; // Gotcha {}
+  </script>
+</body>
+</html>

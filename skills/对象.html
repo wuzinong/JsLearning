@@ -12,6 +12,137 @@
       // 析出一个结构和值完全一样的对象）的对象来说，有一种巧妙的复制方法
       var newObj = JSON.parse( JSON.stringify( someObj ) );
       //如果对象中有function或者undefined等，会被过滤掉，只适用于json安全的对象
+      //
+      var myObject = {
+        a:2
+        };
+        myObject.a; // 2
+        delete myObject.a;
+        myObject.a; // undefined
+        Object.defineProperty( myObject, "a", {
+        value: 2,
+        writable: true,
+        configurable: false,
+        enumerable: true
+        } );
+        myObject.a; // 2
+      delete myObject.a;
+      myObject.a; // 2
+      //如你所见，最后一个delete 语句（静默）失败了，因为属性是不可配置
+      
+      //1对象常量
+      //结合writable:false 和configurable:false 就可以创建一个真正的常量属性（不可修改、重定义或者删除）：
+      var myObject = {};
+        Object.defineProperty( myObject, "FAVORITE_NUMBER", {
+        value: 42,
+        writable: false,
+        configurable: false
+      } );
+
+       // 2. 禁止扩展
+       //  如果你想禁止一个对象添加新属性并且保留已有属性， 可以使用Object.prevent
+       //  Extensions(..)：
+        var myObject ={
+            a:2
+        }
+        Object.preventExtensions(myObject);
+        myObject.b = 3;
+        myObject.b;//undefined
+
+        //密封
+        // Object.seal(..) 会创建一个“密封”的对象，这个方法实际上会在一个现有对象上调用
+        // Object.preventExtensions(..) 并把所有现有属性标记为configurable:false。
+        
+        // 4. 冻结
+        // Object.freeze(..) 会创建一个冻结对象，这个方法实际上会在一个现有对象上调用
+        // Object.seal(..) 并把所有“数据访问”属性标记为writable:false，这样就无法修改它们
+        // 的值。
+        
+        //[[Get]]
+        //如果没有找到名称相同的属性，按照[[Get]] 算法的定义会执行另外一种非常重要
+        //的行为（其实就是遍历可能存在的[[Prototype]] 链，也就是原型链
+        var myObject = {
+        a: 2
+        };
+        myObject.a; // 2
+
+        //[[Put]]
+        //[[Put]] 被触发时，实际的行为取决于许多因素，包括对象中是否已经存在这个属性（这
+        //是最重要的因素）。
+        //如果已经存在这个属性，[[Put]] 算法大致会检查下面这些内容。
+        //1. 属性是否是访问描述符 如果是并且存在setter 就调用setter。
+        //2. 属性的数据描述符中writable 是否是false ？如果是，在非严格模式下静默失败，在
+        //严格模式下抛出TypeError 异常。
+        //3. 如果都不是，将该值设置为属性的值。
+        //如果对象中不存在这个属性，[[Put]] 操作会更加复杂。
+        
+        //for of
+        var myArray = [ 1, 2, 3 ];
+          for (var v of myArray) {
+          console.log( v );
+          }
+        //数组有内置的@@iterator，因此for..of 可以直接应用在数组上。我们使用内置的@@
+        //iterator 来手动遍历数组，看看它是怎么工作的：
+          var myArray = [ 1, 2, 3 ];
+          var it = myArray[Symbol.iterator]();
+          it.next(); // { value:1, done:false }
+          it.next(); // { value:2, done:false }
+          it.next(); // { value:3, done:false }
+          it.next(); // { done:true }
+
+          //当然，你可以给任何想遍历的对象定义@@iterator
+          var myObject = {
+              a:2,
+              b:3
+          }
+          Object.defineProperty(myObject,Symbol.iterator,{
+              enumerable:false,
+              writable:false,
+              configurable:true,
+              value:function(){
+                  var o = this;
+                  var idx = 0;
+                  var ks = Object.keys(o);
+                  return {
+                     next:function(){
+                        return {
+                           value:o[ks[idx++]],
+                           don:(idx > ks.length)
+                        }
+                     }
+                  }
+              }
+          });
+          //手动遍历myObject
+          var it = myObject[Symbol.iterator]();
+          it.next(); // { value:2, done:false }
+          it.next(); // { value:3, done:false }
+          it.next(); // { value:undefined, done:true }
+          // 用for..of 遍历myObject
+          for (var v of myObject) {
+          console.log( v );
+          }
+          // 2
+          // 3
+          
+          // 实际上，你甚至可以定义一个“无限”迭代器，它永远不会“结束”并且总会返回一个新
+          // 值（比如随机数、递增值、唯一标识符，等等）。你可能永远不会在for..of 循环中使用这
+          // 样的迭代器，因为它永远不会结束，你的程序会被挂起：
+          var randoms = {
+            [Symbol.iterator]: function() {
+            return {
+            next: function() {
+            return { value: Math.random() };
+            }
+            };
+            }
+            };
+            var randoms_pool = [];
+            for (var n of randoms) {
+            randoms_pool.push( n );
+            // 防止无限运行！
+            if (randoms_pool.length === 100) break;
+          }
 	</script>
 </body>
 </html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Es6中的class</title>
+</head>
+<body>
+ 
+	<script type="text/javascript">
+		   // class陷阱
+    //  class 并不会像传统面向类的语言一样在声明时静态复制所有行为。如果你
+    // （有意或无意）修改或者替换了父“类”中的一个方法，那子“类”和所有实例都会受到
+    // 影响，因为它们在定义时并没有进行复制，只是使用基于[[Prototype]] 的实时委托：
+       class C{
+          constructor(){
+              this.num = Math.random();
+          }
+          rand(){
+              console.log("Random: "+this.num);
+          }
+       }
+       var c1 = new C();
+       c1.rand(); // "Random: 0.4324299..."
+       C.prototype.rand = function() {
+        console.log( "Random: " + Math.round( this.num * 1000 ));
+        };
+        var c2 = new C();
+        c2.rand(); // "Random: 867"
+        c1.rand(); // "Random: 432" ——噢！
+
+        // class 语法无法定义类成员属性（只能定义方法），如果为了跟踪实例之间共享状态必须要
+        // 这么做，那你只能使用丑陋的.prototype 语法，像这样：
+        class C {
+          constructor() {
+          // 确保修改的是共享状态而不是在实例上创建一个屏蔽属性！
+          C.prototype.count++;
+          // this.count 可以通过委托实现我们想要的功能
+          console.log( "Hello: " + this.count );
+          }   
+        }
+        // 直接向prototype 对象上添加一个共享状态
+        C.prototype.count = 0;
+        var c1 = new C();
+        // Hello: 1
+        var c2 = new C();
+        // Hello: 2
+        c1.count === 2; // true
+        c1.count === c2.count; // true
+
+        // 这种方法最大的问题是， 它违背了class 语法的本意， 在实现中暴露（ 泄露！）
+        // 了.prototype。
+        // 如果使用this.count++ 的话，我们会很惊讶地发现在对象c1 和c2 上都创建了.count 属
+        // 性，而不是更新共享状态。class 没有办法解决这个问题，并且干脆就不提供相应的语法
+        // 支持，所以你根本就不应该这样做。
+        // 
+        // 此外，class 语法仍然面临意外屏蔽的问题：
+        class C {
+          constructor(id) {
+          // 噢，郁闷，我们的id 属性屏蔽了id() 方法
+          this.id = id;
+          }
+          id() {
+          console.log( "Id: " + id );
+          }
+          }
+          var c1 = new C( "c1" );
+          c1.id(); // TypeError -- c1.id 现在是字符串"c1"
+
+          // 除此之外，super 也存在一些非常细微的问题。你可能认为super 的绑定方法和this 类似
+          // （参见第2 章），也就是说，无论目前的方法在原型链中处于什么位置，super 总会绑定到
+          // 链中的上一层。
+          // 然而，出于性能考虑（this 绑定已经是很大的开销了），super 并不是动态绑定的，它会在
+          // 声明时“静态”绑定。没什么大不了的，是吧？
+          // 呃……可能，可能不是这样。如果你和大多数JavaScript 开发者一样，会用许多不同的方
+          // 定义的）对象上，那你可能不知道，每次执行这些操
+          // 作时都必须重新绑定super
+          // 所以你可能（写作本书时，TC39 正在讨论这个话题）需要用toMethod(..) 来手动绑定
+          // super（类似用bind(..) 来绑定this——参见第2 章）。
+          // 你已经习惯了把方法应用到不同的对象上，从而可以自动利用this 的隐式绑定规则（参见
+          // 第2 章）。但是这对于super 来说是行不通的。
+          // 思考下面代码中super 的行为（D 和E 上）：
+            class P{
+               foo(){
+                 console.log("P.foo");
+               }
+            }
+            class C extends P{
+               foo(){
+                  super();
+               }
+            }
+            var c1 = new C();
+            c1.foo();//P.foo
+            var D = {
+               foo:function(){console.log("D.foo")}
+            }
+            var E = {
+               foo:C.prototype.foo
+            }
+            // 把E 委托到D
+            Object.setPrototypeOf(E,D);
+            E.foo();//P.foo
+            // 如果你认为super 会动态绑定（非常合理！），那你可能期望super() 会自动识别出E 委托
+            // 了D，所以E.foo() 中的super() 应该调用D.foo()。
+            // 但事实并不是这样。出于性能考虑，super 并不像this 一样是晚绑定（late bound， 或者说
+            // 动态绑定）的，它在[[HomeObject]].[[Prototype]] 上，[[HomeObject]] 会在创建时静态
+            // 绑定。
+            // 在本例中，super() 会调用P.foo()，因为方法的[[HomeObject]] 仍然是C，C.[[Prototype]]
+            // 是P。
+            // 确实可以手动修改super 绑定，使用toMethod(..) 绑定或重新绑定方法的[[HomeObject]]
+            // （就像设置对象的[[Prototype]] 一样！）就可以解决本例的问题：
+            
+            var D = {
+                foo:function(){
+                   console.log("D.foo");
+                }
+            };
+           // 把E 委托到 D
+            var E = Object.create( D );
+            // 手动把foo 的[[HomeObject]] 绑定到E，E.[[Prototype]] 是D， 所以 super() 是D.foo()
+            E.foo = C.prototype.foo.toMethod( E, "foo" );
+            E.foo(); // "D.foo"
+            // toMethod(..) 会复制方法并把homeObject 当作第一个参数（也就是我们传入
+            // 的E），第二个参数（可选）是新方法的名称（默认是原方法名）。
+  </script>
+</body>
+</html>
