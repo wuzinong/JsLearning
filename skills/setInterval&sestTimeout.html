@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>setInterval&setTimeout</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+		//http://www.w3cplus.com/javascript/javaScript-setInterval.html
+		//http://www.w3cplus.com/blog/2103.html
+		//
+		//setInterval(func|code,interval,param)
+		//setInterval()指定的是“开始执行”之间的间隔，并不考虑每次任务执行本身所消耗的事件。因此实际上，两次执行之间的间隔会小于指定的时间。比如，setInterval()指定每100ms执行一次，每次执行需要5ms，那么第一次执行结束后95毫秒，第二次执行就会开始。如果某次执行耗时特别长，比如需要105毫秒，那么它结束后，下一次执行就会立即开始。
+		//实现间隔时间确定的setInterval()的效果。
+		
+		function interval(func,wait){
+			var interv = function(){
+				func.call(null);
+				setTimeout(interv,wait);
+			};
+			setTimeout(interv,wait);
+		}
+		interval(function(){
+			console.log("test")
+		},1000);
+
+		// setTimeout()和setInterval()的运行机制是，将指定的代码移出本次执行，等到下一轮Event Loop时，再检查是否到了指定时间。如果到了，就执行对应的代码；如果不到，就等到再下一轮Event Loop时重新判断。这意味着，setTimeout()指定的代码，必须等到本次执行的所有代码都执行完，才会执行。
+        // 每一轮Event Loop时，都会将“任务队列”中需要执行的任务，一次执行完。setTimeout()和setInterval()都是把任务添加到“任务队列”的尾部。因此，它们实际上要等到当前脚本的所有同步任务执行完，然后再等到本次Event Loop的“任务队列”的所有任务执行完，才会开始执行。由于前面的任务到底需要多少时间执行完，是不确定的，所以没有办法保证，setTimeout()和setInterval()指定的任务，一定会按照预定时间执行。
+        // 
+        // 
+        // setTimeout(func,0)
+        // 
+        // 运行下面代，func1和func2谁会先执行？很明显func2先执行
+        setTimeout(function () { func1(); }, 0);
+        func2();
+
+        //setTimeout()的作用是将代码推迟到指定时间执行，如果指定时间为0，即setTimeout(f,0)，那么会立刻执行吗？
+        //答案是不会。因为setTimeout()运行机制说过，必须要等到当前脚本的同步任务和“任务队列”中已有的事件，全部处理完以后，才会执行setTimeout()指定的任务。也就是说，setTimeout()的真正作用是，在“任务队列”的现有事件的后面再添加一个事件，规定在指定时间执行某段代码。setTimeout()添加的事件，会在下一次Event Loop执行。
+        //setTimeout(f,0)将第二个参数设为0，作用是让f在现有的任务（脚本的同步任务和“任务队列”中已有的事件）一结束就立刻执行。也就是说，setTimeout(f,0)的作用是，尽可能早地执行指定的任务。
+        //
+        setTimeout(function() { console.log("Timeout"); }, 0); function a(x) { console.log("a() 开始运行"); b(x); console.log("a() 结束运行"); } function b(y) { console.log("b() 开始运行"); console.log("传入的值为" + y); console.log("b() 结束运行"); } console.log("当前任务开始"); a(42); console.log("当前任务结束"); // 当前任务开始 // a() 开始运行 // b() 开始运行 // 传入的值为42 // b() 结束运行 // a() 结束运行 // 当前任务结束 // Timeout
+
+
+
+        var input = document.getElementsByTagName('input[type=button]')[0]; input.onclick = function A() { setTimeout(function B() { input.value +=' input'; }, 0) }; document.body.onclick = function C() { input.value += ' body' };
+
+		// 上面代码在点击按钮后，先触发回调函数A，然后触发函数C。在函数A中，setTimeout()将函数B推迟到下一轮Loop执行，这样就起到了，先触发父元素的回调函数C的目的了。
+
+		// 用户自定义的回调函数，通常在浏览器的默认动作之前触发。比如，用户在输入框输入文本，keypress事件会在浏览器接收文本之前触发。因此，下面的回调函数是达不到目的的。
+		document.getElementById('input-box').onkeypress = function(event) { this.value = this.value.toUpperCase(); }
+
+		// 上面代码想在用户输入文本后，立即将字符转为大写。但是实际上，它只能将上一个字符转为大写，因为浏览器此时还没接收到文本，所以this.value取不到最新输入的那个字符。只有用setTimeout()改写，上面的代码才能发挥作用。
+		document.getElementById('my-ok').onkeypress = function() { var self = this; setTimeout(function() { self.value = self.value.toUpperCase(); }, 0); }
+
+
+	  // setTimeout()一个很关键的用法就是分片，如果一段程序过大，我们可以拆分成若干细小的块。由于setTimeout(f,0)实际上意味着，将任务放到浏览器最早可得的空闲时段执行，所以那些计算量大、耗时长的任务，常常会被放到几个小部分，分别放到setTimeout(f,0)里面执行(分片塞入队列)，这样即使在复杂程序没有处理完时，我们操作页面，也是能得到即时响应的。其实就是将交互插入到了复杂程序中执行。
+	  var div = document.getElementsByTagName('div')[0]; 
+	  // 写法一 
+	  for(var i=0xA00000;i<0xFFFFFF;i++) { div.style.backgroundColor = '#'+i.toString(16); } 
+	  // 写法二 
+	  var timer; var i=0x100000; function func() { timer = setTimeout(func, 0); div.style.backgroundColor = '#'+i.toString(16); if (i++ == 0xFFFFFF) clearInterval(timer); } timer = setTimeout(func, 0);
+	  // 上面代码有两种写法，都是改变一个网页元素的背景色。写法一会造成浏览器“堵塞”，而写法二就不会，这就是setTimeout(f,0)的好处。即：可利用setTimeout()实现一种伪多线程的概念。
+	  // 
+	  //clearTimeout()
+	  //setTimeout()和setInterval()返回的整数值是连续的(一定环境下，比如浏览器控制台，或者JS执行环境等)，也就是说，第二个setTimeout()方法返回的整数值，将比第一个的整数值大1。利用这一点，可以写一个函数，取消当前所有的setTimeout()
+	  (function() { var gid = setInterval(clearAllTimeouts, 0); 
+	  	function clearAllTimeouts() {
+	  	 var id = setTimeout(function() {}, 0); while (id > 0) { if (id !== gid) { clearTimeout(id); } id--; } }
+	  	})();
+	</script>
+</body>
+</html>

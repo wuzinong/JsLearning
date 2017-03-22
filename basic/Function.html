@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Function Learning</title>
+</head>
+<body>
+	<script type="text/javascript">
+	   //https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
+	   
+	   //apply-----------------------------------------------------------------------------------
+	   //指定 this 值和参数（参数以数组或类数组对象的形式存在）的情况下调用某个函数。
+	   //fun.apply(thisArg[, argsArray])
+	   //thisArg
+	   //在 fun 函数运行时指定的 this 值。需要注意的是，指定的 this 值并不一定是该函数执行时真正的 this 值，如果这个函数处于非严格模式下，则指定为 null 或 undefined 时会自动指向全局对象（浏览器中就是window对象），同时值为原始值（数字，字符串，布尔值）的 this 会指向该原始值的自动包装对象。
+	   //argsArray
+	   //一个数组或者类数组对象，其中的数组元素将作为单独的参数传给 fun 函数。如果该参数的值为null 或 undefined，则表示不需要传入任何参数。从ECMAScript 5 开始可以使用类数组对象。浏览器兼容性请参阅本文底部内容。
+	   
+
+
+	   //bind----------------------------------------------------------------------------------------
+	   //会创建一个新函数。当这个新函数被调用时，bind()的第一个参数将作为它运行时的 this, 之后的一序列参数将会在传递的实参前传入作为它的参数。
+	   //fun.bind(thisArg[, arg1[, arg2[, ...]]])
+	   //thisArg 当绑定函数被调用时，该参数会作为原函数运行时的 this 指向。当使用new 操作符调用绑定函数时，该参数无效。
+	   //arg1, arg2, ...  当绑定函数被调用时，这些参数将置于实参之前传递给被绑定的方法。
+	   //
+	   //bind() 函数会创建一个新函数（称为绑定函数），新函数与被调函数（绑定函数的目标函数）具有相同的函数体（在 ECMAScript 5 规范中内置的call属性）。当目标函数被调用时 this 值绑定到 bind() 的第一个参数，该参数不能被重写。绑定函数被调用时，bind() 也接受预设的参数提供给原函数。一个绑定函数也能使用new操作符创建对象：这种行为就像把原函数当成构造器。提供的 this 值被忽略，同时调用时的参数被提供给模拟函数。
+
+	   //创建绑定函数
+	   // bind() 最简单的用法是创建一个函数，使这个函数不论怎么调用都有同样的 this 值。JavaScript新手经常犯的一个错误是将一个方法从对象中拿出来，然后再调用，希望方法中的 this 是原来的对象。（比如在回调中传入这个方法。）如果不做特殊处理的话，一般会丢失原来的对象。从原来的函数和原来的对象创建一个绑定函数，则能很漂亮地解决这个问题：
+	   this.x = 9;
+	   var module = {
+	   	   x:81,
+	   	   getX:function(){return this.x;}
+	   }
+	   module.getX();//81
+	   var retrieveX = module.getX;
+	   retrieveX();//9
+	   //创建一个新函数，将"this"绑定到module对象
+	   // 新手可能会被全局的x变量和module里的属性x所迷惑
+	   var boundGetX = retrieveX.bind(module);
+	   boundGetX();//81
+
+	   //偏函数（Partial Functions）
+	   //bind()的另一个最简单的用法是使一个函数拥有预设的初始参数。这些参数（如果有的话）作为bind()的第二个参数跟在this（或其他对象）后面，之后它们会被插入到目标函数的参数列表的开始位置，传递给绑定函数的参数会跟在它们的后面。
+	   function list(){
+	   	   return Array.prototype.slice.call(arguments);
+	   }
+	   var list1 = list(1,2,3);//[1,2,3]
+	   var leadingThirtysevenList = list.bind(undefined,37);
+	   var list2 = leadingThirtysevenList();//[37]
+	   var list3 =leadingThirtysevenList(1,2,3);//[37,1,2,3]
+
+	 //Pollyfill
+		Function.prototype.myBind = function (oThis) {
+	    if (typeof this !== "function") {
+	      // closest thing possible to the ECMAScript 5
+	      // internal IsCallable function
+	      throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+	    }
+
+	    var aArgs = Array.prototype.slice.call(arguments, 1), 
+	        fToBind = this, 
+	        fNOP = function () {},
+	        fBound = function () {
+	          return fToBind.apply(this instanceof fNOP
+	                                 ? this
+	                                 : oThis || this,
+	                               aArgs.concat(Array.prototype.slice.call(arguments)));
+	        };
+
+	    fNOP.prototype = this.prototype;
+	    fBound.prototype = new fNOP();
+	    console.log("aArgs")
+	    console.log(aArgs)
+	    return fBound;
+	  };
+
+        function list(){
+	   	   return Array.prototype.slice.call(arguments);
+	   }
+
+	   var myBind2 = list.myBind(undefined,37);
+	   var list2 = myBind2(1,2,3);
+	   console.log(list2);
+ 
+	</script>
+</body>
+</html>
