@@ -121,18 +121,43 @@ var dosomething = (chunk)=>{
 // 问题达到最小规模，不需要再简化，因此直接返回1。
 
 //了解了必要的算法后，我们可以简单地实现以下目录遍历函数
-function travel(dir,callback){
-    fs.readdirSync(dir).forEach(function(file){
-        var pathname = path.join(dir,file);
+// function travel(dir,callback){
+//     fs.readdirSync(dir).forEach(function(file){
+//         var pathname = path.join(dir,file);
 
-        if(fs.statSync(pathname).isDirectory()){
-            travel(pathname,callback);
-        }else{
-            callback(pathname);
-        }
+//         if(fs.statSync(pathname).isDirectory()){
+//             travel(pathname,callback);
+//         }else{
+//             callback(pathname);
+//         }
+//     });
+// }
+
+// travel('./test',function(name){
+//     console.log(name)
+// });
+
+//异步遍历
+function travel(dir, callback, finish) {
+    fs.readdir(dir, function (err, files) {
+        (function next(i) {
+            if (i < files.length) {
+                var pathname = path.join(dir, files[i]);
+
+                fs.stat(pathname, function (err, stats) {
+                    if (stats.isDirectory()) {
+                        travel(pathname, callback, function () {
+                            next(i + 1);
+                        });
+                    } else {
+                        callback(pathname, function () {
+                            next(i + 1);
+                        });
+                    }
+                });
+            } else {
+                finish && finish();
+            }
+        }(0));
     });
 }
-
-travel('./test',function(name){
-    console.log(name)
-})
