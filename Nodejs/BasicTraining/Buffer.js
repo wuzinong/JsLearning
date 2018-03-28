@@ -20,4 +20,5 @@ var dup = new Buffer(bin.length);
 bin.copy(dup);
 dup[0] = 0x65;
 console.log(bin);
-console.log(dup)
+console.log(dup);
+
