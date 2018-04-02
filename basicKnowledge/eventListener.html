@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       section{
+           border:1px solid green;
+           width:800px;
+           height:600px;
+       }
+       button{
+           width:200px;
+           height:50px;
+       }
+    </style>
+</head>
+<body>
+    <button id="add">Add</button>
+    <button id="remove">remove</button>
+
+    <section id="stag"></section>
+    
+    <script>
+        function bindFunc(func,testData){
+            return function(){
+                func.apply(null,testData)
+            }
+        }
+        function handleClick(event){
+            console.log(event)
+            console.log("container click");
+        }
+        //let handled = bindFunc()
+        function addClick(event){
+            let container = document.querySelector("#stag");
+            container.addEventListener("click",handleClick,false);
+        }
+        function removeClick(event){
+            let container = document.querySelector("#stag");
+            container.removeEventListener("click",handleClick,false);
+        }
+
+        window.onload=function(){
+            let add = document.querySelector("#add");
+            let remove = document.querySelector("#remove");
+
+            
+            //let func = bindFunc(handleClick,123);
+            //console.log(func)
+            add.addEventListener("click",addClick,false);
+            remove.addEventListener("click",removeClick,false);
+        }
+    </script>
+</body>
+</html>
