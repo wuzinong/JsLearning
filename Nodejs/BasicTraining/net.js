@@ -14,6 +14,7 @@ net.createServer(function(conn){
         ].join('\n'))
     })
 }).listen(80)
+
 // 接着我们来看一个使用Socket发起HTTP客户端请求的例子。这个例子中，
 // Socket客户端在建立连接后发送了一个HTTP GET请求，并通过data事件监听函数来获取服务器响应。
 // 灵机一点
