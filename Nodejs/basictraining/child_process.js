@@ -625,3 +625,38 @@ process.on('message', (m, socket) => {
 // 如果子进程被衍生时 stdio[2] 被设为任何不是 'pipe' 的值，则这会是 null。
 
 // subprocess.stderr 是 subprocess.stdio[2] 的一个别名。 这两个属性指向相同的值。
+
+
+//subprocess.stdin
+// 一个代表子进程的 stdin 的可写流。
+
+// 注意，如果一个子进程正在等待读取所有的输入，则子进程不会继续直到流已通过 end() 关闭。
+
+// 如果子进程被衍生时 stdio[0] 被设为任何不是 'pipe' 的值，则这会是 null。
+
+// subprocess.stdin 是 subprocess.stdio[0] 的一个别名。 这两个属性指向相同的值。
+
+
+//subprocess.stdio
+// 一个到子进程的管道的稀疏数组，对应着传给 child_process.spawn() 
+// 的选项中值被设为 'pipe' 的 stdio。 注意，subprocess.stdio[0]、subprocess.stdio[1] 和 subprocess.stdio[2] 
+// 分别可用作 subprocess.stdin、 subprocess.stdout 和 subprocess.stderr。
+
+// 在下面的例子中，只有子进程的 fd 1（stdout）被配置为一个管道，所以只有父进程的 subprocess.stdio[1] 是一个流，
+// 数组中的其他值都是 null。
+const assert = require('assert');
+const fs = require('fs');
+const child_process = require('child_process');
+
+const subprocess = child_process.spawn('ls', {
+  stdio: [
+    0, // 使用父进程的 stdin 用于子进程
+    'pipe', // 把子进程的 stdout 通过管道传到父进程 
+    fs.openSync('err.out', 'w') // 把子进程的 stderr 指向一个文件
+  ]
+});
+
+//subprocess.stdout
+// 一个代表子进程的 stdout 的可读流。
+// 如果子进程被衍生时 stdio[1] 被设为任何不是 'pipe' 的值，则这会是 null。
+// subprocess.stdout 是 subprocess.stdio[1] 的一个别名。 这两个属性指向相同的值。
