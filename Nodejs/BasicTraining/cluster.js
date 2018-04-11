@@ -7,6 +7,7 @@ const cluster = require('cluster');
 const http = require('http');
 const numCpus = require('os').cpus().length;
 
+console.log(numCpus);
 if(cluster.isMaster){
     console.log(`Master process ${process.pid} is now running`);
 
@@ -25,5 +26,13 @@ if(cluster.isMaster){
          res.writeHead(200);
          res.end('hello');
      }).listen(8000);
-     cosnole.log(`Process ${process.pid} has started`)
+     console.log(`Process ${process.pid} has started`)
 }
+
+//Class: Worker
+// Worker对象包含了关于工作进程的所有public信息和方法。
+
+// 在一个主进程里，可以使用cluster.workers来获取Worker对象。
+
+// 在一个工作进程里，可以使用cluster.worker来获取Worker对象。
+
