@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    
+    <a v-bind:href="url">...</a>
+    <a v-on:click="doSomething">...</a>
+     
+    v-bind 缩写
+    <!-- 完整语法 -->
+    <a v-bind:href="url">...</a>
+
+    <!-- 缩写 -->
+    <a :href="url">...</a>
+
+    on 缩写
+    <!-- 完整语法 -->
+    <a v-on:click="doSomething">...</a>
+
+    <!-- 缩写 -->
+    <a @click="doSomething">...</a>
+
+    <script>
+       window.onload = function(){
+        //数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值：
+        //Mustache 标签将会被替代为对应数据对象上 msg 属性的值。无论何时，
+        //绑定的数据对象上 msg 属性发生了改变，插值处的内容都会更新。
+        //<span>Message: {{ msg }}</span>
+        //通过使用 v-once 指令，你也能执行一次性地插值，当数据改变时，插值处的内容不会更新。但请留心这会影响到该节点上的其它数据绑定：
+        //<span v-once>这个将不会改变: {{ msg }}</span>
+        //双大括号会将数据解释为普通文本，而非 HTML 代码。为了输出真正的 HTML，你需要使用 v-html 指令：
+        //<p>Using mustaches: {{ rawHtml }}</p>
+        //<p>Using v-html directive: <span v-html="rawHtml"></span></p>
+        //Mustache 语法不能作用在 HTML 特性上，遇到这种情况应该使用 v-bind 指令：
+        //<div v-bind:id="dynamicId"></div>
+        //在布尔特性的情况下，它们的存在即暗示为 true，v-bind 工作起来略有不同，在这个例子中：
+        //button v-bind:disabled="isButtonDisabled">Button</button>
+
+        //使用 JavaScript 表达式
+        //迄今为止，在我们的模板中，我们一直都只绑定简单的属性键值。
+        //但实际上，对于所有的数据绑定，Vue.js 都提供了完全的 JavaScript 表达式支持。
+        //{{ number + 1 }}
+
+        //{{ ok ? 'YES' : 'NO' }}
+
+        //{{ message.split('').reverse().join('') }}
+
+        //<div v-bind:id="'list-' + id"></div>
+
+        //这些表达式会在所属 Vue 实例的数据作用域下作为 JavaScript 被解析。有个限制就是，每个绑定都只能包含单个表达式，所以下面的例子都不会生效。
+
+        //<!-- 这是语句，不是表达式 -->
+        //{{ var a = 1 }}
+
+        //<!-- 流控制也不会生效，请使用三元表达式 -->
+        //{{ if (ok) { return message } }}
+        //模板表达式都被放在沙盒中，只能访问全局变量的一个白名单，如 Math 和 Date 。
+        //你不应该在模板表达式中试图访问用户定义的全局变量。
+
+     }
+    </script>
+</body>
+</html> 

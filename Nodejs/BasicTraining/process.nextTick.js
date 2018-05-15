@@ -66,3 +66,77 @@
 // setImmediate(function(){
 //     console.log("SETIMMEDIATE");
 // });
+
+//如果将之放入I/o回调，那么是确定的,setImmediate总是会在setTimeout之前被调用
+// var fs = require('fs');
+// fs.readFIle('test.txt',function(){
+//     setTimeout(function(){
+//         console.log("Set time out")
+//     });
+//     setImmediate(function(){
+//         console.log("Set Immediate")
+//     })
+// })
+
+
+
+//setImmediate
+var i = 0;
+var start = new Date();
+function foo () {
+    i++;
+    if (i < 1000) {
+        setImmediate(foo);
+    } else {
+        var end = new Date();
+        console.log("Execution time: ", (end - start));
+    }
+}
+foo();
+
+
+//setTimeout 0
+// var i = 0;
+// var start = new Date();
+// function foo () {
+//     i++;
+//     if (i < 1000) {
+//         setTimeout(foo, 0);
+//     } else {
+//         var end = new Date();
+//         console.log("Execution time: ", (end - start));
+//     }
+// }
+// foo();
+
+// var i = 0;
+// function foo(){
+//   i++;
+//   if(i>20){
+//     return;
+//   }
+//   console.log("foo:"+i);
+//   setTimeout(()=>{
+//     console.log("setTimeout:"+i);
+//   },0);
+//   process.nextTick(foo);
+// }   
+// setTimeout(foo, 2);
+
+var i = 0;
+function foo(){
+  i++;
+  if(i>20){
+    return;
+  }
+  console.log("foo", i);
+  setTimeout(()=>{
+    console.log("setTimeout", i);
+  },0);
+  process.nextTick(foo);
+}
+
+setTimeout(foo, 2);
+setTimeout(()=>{
+  console.log("Other setTimeout");
+},2);
