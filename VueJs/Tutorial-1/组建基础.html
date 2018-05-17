@@ -79,6 +79,135 @@
     到目前为止，关于 prop 你需要了解的大概就这些了，如果你阅读完本页内容并掌握了它的内容，我们会推荐你再回来把 prop 读完。
 
     当构建一个 <blog-post> 组件时，你的模板最终会包含的东西远不止一个标题：
+    <h3>{{ post.title }}</h3>
+    最最起码，你会包含这篇博文的正文：
+    <h3>{{ post.title }}</h3>
+    <div v-html="post.content"></div>
+    然而如果你在模板中尝试这样写，Vue 会显示一个错误，并解释道 every component must have a single root element (每个组件必须只有一个根元素)。你可以将模板的内容包裹在一个父元素内，来修复这个问题，例如：
+    <div class="blog-post">
+            <h3>{{ post.title }}</h3>
+            <div v-html="post.content"></div>
+    </div>
+
+    通过事件向父级组件发送消息
+    在我们开发 <blog-post> 组件时，它的一些功能可能要求我们和父级组件进行沟通。例如我们可能会引入一个可访问性的功能来放大博文的字号，同时让页面的其它部分保持默认的字号。
+    在其父组件中，我们可以通过添加一个 postFontSize 数据属性来支持这个功能：
+    new Vue({
+        el: '#blog-posts-events-demo',
+        data: {
+          posts: [/* ... */],
+          postFontSize: 1
+        }
+    })
+    它可以在模板中用来控制所有博文的字号：
+    <div id="blog-posts-events-demo">
+            <div :style="{ fontSize: postFontSize + 'em' }">
+              <blog-post
+                v-for="post in posts"
+                v-bind:key="post.id"
+                v-bind:post="post"
+              ></blog-post>
+            </div>
+    </div>
+    现在我们在每篇博文正文之前添加一个按钮来放大字号：
+    Vue.component('blog-post', {
+        props: ['post'],
+        template: `
+          <div class="blog-post">
+            <h3>{{ post.title }}</h3>
+            <button>
+              Enlarge text
+            </button>
+            <div v-html="post.content"></div>
+          </div>
+        `
+    })
+    上述的这个和一些接下来的示例使用了 JavaScript 的模板字符串来让多行的模板更易读。它们在 IE 下并没有被支持，所以如果你需要在不 (经过 Babel 或 TypeScript 之类的工具) 编译的情况下支持 IE，请使用折行转义字符取而代之。
+    问题是这个按钮不会做任何事：
+    <button>
+            Enlarge text
+    </button>
+
+    当点击这个按钮时，我们需要告诉父级组件放大所有博文的文本。幸好 Vue 实例提供了一个自定义事件的系统来解决这个问题。我们可以调用内建的 $emit 方法并传入事件的名字，来向父级组件触发一个事件：
+    <button v-on:click="$emit('enlarge-text')">
+            Enlarge text
+    </button>
+    然后我们可以用 v-on 在博文组件上监听这个事件，就像监听一个原生 DOM 事件一样：
+    <blog-post
+    ...
+    v-on:enlarge-text="postFontSize += 0.1"
+    ></blog-post>
+    使用事件抛出一个值
+    有的时候用一个事件来抛出一个特定的值是非常有用的。例如我们可能想让 <blog-post> 组件决定它的文本要放大多少。这时可以使用 $emit 的第二个参数来提供这个值：
+            <button v-on:click="$emit('enlarge-text', 0.1)">
+                    Enlarge text
+                  </button>
+    
+    然后当在父级组件监听这个事件的时候，我们可以通过 $event 访问到被抛出的这个值：
+    <blog-post
+    ...
+    v-on:enlarge-text="postFontSize += $event"
+    ></blog-post>
+    或者，如果这个事件处理函数是一个方法：
+    <blog-post
+    ...
+    v-on:enlarge-text="onEnlargeText"
+    ></blog-post>
+    那么这个值将会作为第一个参数传入这个方法：
+    methods: {
+        onEnlargeText: function (enlargeAmount) {
+          this.postFontSize += enlargeAmount
+        }
+    }
+
+    在组件上使用 v-model
+    自定义事件也可以用于创建支持 v-model 的自定义输入组件。记住：
+    <input v-model="searchText">
+    等价于：
+    <input
+    v-bind:value="searchText"
+    v-on:input="searchText = $event.target.value"
+    >
+    当用在组件上时，v-model 则会这样：
+    <custom-input
+    v-bind:value="searchText"
+    v-on:input="searchText = $event"
+    ></custom-input>
+    为了让它正常工作，这个组件内的 <input> 必须：
+    将其 value 特性绑定到一个名叫 value 的 prop 上
+    在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
+    写成代码之后是这样的：
+    Vue.component('custom-input', {
+        props: ['value'],
+        template: `
+          <input
+            v-bind:value="value"
+            v-on:input="$emit('input', $event.target.value)"
+          >
+        `
+    })
+    现在 v-model 就应该可以在这个组件上完美地工作起来了：
+    <custom-input v-model="searchText"></custom-input>
+    通过插槽分发内容
+    和 HTML 元素一样，我们经常需要向一个组件传递内容，像这样：
+    <alert-box>
+            Something bad happened.
+    </alert-box>
+    可能会渲染出这样的东西：
+    Something bad happened.
+    幸好，Vue 自定义的 <slot> 元素让这变得非常简单：
+            Vue.component('alert-box', {
+                template: `
+                  <div class="demo-alert-box">
+                    <strong>Error!</strong>
+                    <slot></slot>
+                  </div>
+                `
+              })
+              如你所见，我们只要在需要的地方加入插槽就行了——就这么简单！
+
+
+
 
 
 
