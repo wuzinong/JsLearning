@@ -299,6 +299,32 @@ f({}); // error, 'a' is required if you supply an argument
 let first = [1, 2];
 let second = [3, 4];
 let bothPlus = [0, ...first, ...second, 5];
+//这会令bothPlus的值为[0, 1, 2, 3, 4, 5]。 展开操作创建了 first和second的一份浅拷贝。 它们不会被展开操作所改变。
+
+//你还可以展开对象：
+let defaults = { food: "spicy", price: "$$", ambiance: "noisy" };
+let search = { ...defaults, food: "rich" };
+
+//search的值为{ food: "rich", price: "$$", ambiance: "noisy" }。 对象的展开比数组的展开要复杂的多。 像数组展开一样，它是从左至右进行处理，但结果仍为对象。 这就意味着出现在展开对象后面的属性会覆盖前面的属性。 因此，如果我们修改上面的例子，在结尾处进行展开的话：
+let defaults = { food: "spicy", price: "$$", ambiance: "noisy" };
+let search = { food: "rich", ...defaults };
+
+// 、那么，defaults里的food属性会重写food: "rich"，在这里这并不是我们想要的结果。
+//对象展开还有其它一些意想不到的限制。 首先，它仅包含对象 自身的可枚举属性。 大体上是说当你展开一个对象实例时，你会丢失其方法：
+class C {
+    p = 12;
+    m() {
+    }
+  }
+  let c = new C();
+  let clone = { ...c };
+  clone.p; // ok
+  clone.m(); // error!
+
+//其次，TypeScript编译器不允许展开泛型函数上的类型参数。 这个特性会在TypeScript的未来版本中考虑实现。
+
+
+
 
 
 
