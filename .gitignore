@@ -57,9 +57,3 @@ typings/
 # dotenv environment variables file
 .env
 
-<<<<<<< HEAD
-=======
-node_modules
-.DS_Store
-.vscode
->>>>>>> 90aaa77ec8c52acd165994ef2c6ffbf310ba7f0b
