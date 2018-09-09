@@ -1,0 +1,11 @@
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.deps.json
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.runtimeconfig.json
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.runtimeconfig.dev.json
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.dll
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.pdb
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.csprojAssemblyReference.cache
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.csproj.CoreCompileInputs.cache
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.AssemblyInfoInputs.cache
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.AssemblyInfo.cs
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.dll
+D:\work\Git\JsLearning\DotNetCore\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.pdb
