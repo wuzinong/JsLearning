@@ -21,22 +21,48 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\redux\actions\index.tsx" />
-    <None Remove="ClientApp\redux\constants\index.tsx" />
-    <None Remove="ClientApp\redux\reducers\demo.tsx" />
-    <None Remove="ClientApp\redux\reducers\index.tsx" />
-    <None Remove="ClientApp\redux\store\configureStore.tsx" />
-    <None Remove="ClientApp\redux\store\initState.tsx" />
+    <None Remove="ClientApp\dist\89889688147bd7575d6327160d64e760.svg" />
+    <None Remove="ClientApp\dist\favicon.ico" />
+    <None Remove="ClientApp\dist\main-client.js" />
+    <None Remove="ClientApp\dist\main-client.js.map" />
+    <None Remove="ClientApp\dist\site.css" />
+    <None Remove="ClientApp\dist\site.css.map" />
+    <None Remove="ClientApp\dist\vendor.css" />
+    <None Remove="ClientApp\dist\vendor.js" />
     <None Remove="ClientApp\types\index.tsx" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\redux\actions\index.tsx" />
-    <TypeScriptCompile Include="ClientApp\redux\constants\index.tsx" />
-    <TypeScriptCompile Include="ClientApp\redux\reducers\demo.tsx" />
-    <TypeScriptCompile Include="ClientApp\redux\reducers\index.tsx" />
-    <TypeScriptCompile Include="ClientApp\redux\store\configureStore.tsx" />
-    <TypeScriptCompile Include="ClientApp\redux\store\initState.tsx" />
+    <Content Include="ClientApp\dist\89889688147bd7575d6327160d64e760.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\dist\favicon.ico">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\dist\main-client.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\dist\main-client.js.map">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\dist\site.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\dist\site.css.map">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\dist\vendor-manifest.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\dist\vendor.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\dist\vendor.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\types\index.tsx" />
   </ItemGroup>
 

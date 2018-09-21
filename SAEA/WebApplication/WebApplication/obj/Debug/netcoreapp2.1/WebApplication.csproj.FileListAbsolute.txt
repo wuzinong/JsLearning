@@ -1,0 +1,11 @@
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\bin\Debug\netcoreapp2.1\WebApplication.deps.json
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\bin\Debug\netcoreapp2.1\WebApplication.runtimeconfig.json
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\bin\Debug\netcoreapp2.1\WebApplication.runtimeconfig.dev.json
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\bin\Debug\netcoreapp2.1\WebApplication.dll
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.csprojAssemblyReference.cache
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.csproj.CoreCompileInputs.cache
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.RazorAssemblyInfo.cache
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.RazorAssemblyInfo.cs
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.AssemblyInfoInputs.cache
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.AssemblyInfo.cs
+C:\My\GitHub\JsLearning\SAEA\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.RazorTargetAssemblyInfo.cache
