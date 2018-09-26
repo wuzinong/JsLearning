@@ -1,2 +1,4 @@
-var dom = document.querySelector(".test");
-dom.style.color = "red";
+
+export function Multiply(a,b){
+    return a*b;
+}
