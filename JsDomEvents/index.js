@@ -84,6 +84,9 @@ function domFunction(e){
   
   console.log("offsetWidth,offsetHeight 整个元素的尺寸(不包括变宽的宽度)");
   console.log(ele.offsetWidth+"-"+ele.offsetHeight);
+
+  console.log("scrollLeft,scrollTop:元素滚动的大小")
+  console.log(ele.scrollLeft+"-"+ele.scrollTop)
 }
 
 window.onload =function(){
