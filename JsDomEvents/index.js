@@ -46,28 +46,20 @@ function domFunction(e){
   console.error("Dom----------------------------------")
 
   // clientLeft,clientTop:表示内容区域的左上角相对于整个元素左上角的位置（包括边框）。(取决于边框的像数值？)
-  // clientWidth,clientHeight:内容区域的宽高，不包括边框宽度值。
+  // clientWidth,clientHeight:内容区域的宽高，不包括边框宽度值/相对文档的宽/高度（可见部分的宽度）
   // offsetLeft,offsetTop:相对于最近的祖先定位元素。
   // offsetParent:某元素的父元素 例如：this.offsetParent.tagName.toLowerCase() 得到body...
-  // offsetWidth,offsetHeight 整个元素的尺寸(不包括变宽的宽度)
+  // offsetWidth,offsetHeight 整个元素的尺寸(不包括变宽的宽度)/对象相对于版面或offsetParent 的高度（可见部分的宽度加上滚动条实体的宽度）
   // scrollLeft,scrollTop:元素滚动的大小
   // scrollWidth,scrollHeight:整个内容区域的宽度(包括需拉动滚动条隐藏起来的那些部分) scrollTop+clientWidth
-  // scrollWidth:获取对象的滚动宽度 
-  // scrollHeight: 获取对象的滚动高度。 
-  // scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离 
-  // scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离
-  // offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置 
-  // offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置
-  // scrollHeight： 对象的滚动高度（滚动条的高度，可滚动的高度）
-  // scrollWidth： 对象的滚动宽度（同上）
-  // scrollLeft： 对象左边界和窗口中目前可见内容的左端之间的距离（滚动条已滚动的距离）
-  // scrollTop： 对象最顶端和窗口中可见内容的最顶端之间的距离（同上）
-  // offsetHeight： 对象相对于版面或offsetParent 的高度（可见部分的宽度加上滚动条实体的宽度）
-  // offsetWidth： 对象相对于版面或offsetParent 的宽度
-  // offsetLeft： 对象相对于版面或由 offsetParent 左侧位置
-  // offsetTop：对象相对于版面或由 offsetTop 顶端位置
-  // clientWidth：相对文档的宽度（可见部分的宽度）
-  // clientHeight：相对文档的高度
+  // scrollWidth:获取对象的滚动宽度/对象的滚动高度（滚动条的高度，可滚动的高度）
+  // scrollHeight: 获取对象的滚动高度。/对象的滚动宽度（同上）
+  // scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离/对象左边界和窗口中目前可见内容的左端之间的距离（滚动条已滚动的距离）
+  // scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离/对象最顶端和窗口中可见内容的最顶端之间的距离（同上）
+  // offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置/对象相对于版面或由 offsetParent 左侧位置
+  // offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置/对象相对于版面或由 offsetTop 顶端位置
+ 
+
   var ele = e.target;
 
   console.log("clientLeft,clientTop:表示内容区域的左上角相对于整个元素左上角的位置（包括边框）Border 取决于边框的像数值？");
@@ -87,6 +79,9 @@ function domFunction(e){
 
   console.log("scrollLeft,scrollTop:元素滚动的大小")
   console.log(ele.scrollLeft+"-"+ele.scrollTop)
+
+  console.log("scrollWidth,scrollHeight:整个内容区域的宽度(包括需拉动滚动条隐藏起来的那些部分) scrollTop+clientWidth")
+  console.log(ele.scrollWidth+"-"+ele.scrollHeight)
 }
 
 window.onload =function(){
