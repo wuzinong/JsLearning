@@ -1,0 +1,5 @@
+$ npm install -g vue-cli
+$ vue init valnub/vue-framework7-webpack-template my-project
+$ cd my-project
+$ npm install
+$ npm run dev
