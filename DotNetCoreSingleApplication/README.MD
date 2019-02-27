@@ -16,3 +16,4 @@ dotnet new angular
 About react create app (CRA)
 1. npm install create-react-app -g
 2. create-react-app reactcra to init a testing project
+3. npm run eject to get webconfig files
