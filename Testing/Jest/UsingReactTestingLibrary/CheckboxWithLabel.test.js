@@ -11,6 +11,10 @@ it('ReactTestingLibrary: CheckboxWithLabel changes the text after click', () => 
     <CheckboxWithLabel labelOn="On" labelOff="Off" />,
   );
 
+  // console.log(render(
+  //   <CheckboxWithLabel labelOn="On" labelOff="Off" />,
+  // ))
+
   expect(queryByLabelText(/off/i)).toBeTruthy();
 
   fireEvent.click(getByLabelText(/off/i));
