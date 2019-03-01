@@ -7,10 +7,11 @@ import CheckboxWithLabel from './CheckboxWithLabel';
 afterEach(cleanup);
 
 it('ReactTestingLibrary: CheckboxWithLabel changes the text after click', () => {
-  const {queryByLabelText, getByLabelText} = render(
+  const {queryByLabelText, getByLabelText,debug} = render(
     <CheckboxWithLabel labelOn="On" labelOff="Off" />,
   );
 
+  debug();
   // console.log(render(
   //   <CheckboxWithLabel labelOn="On" labelOff="Off" />,
   // ))
