@@ -1,4 +1,5 @@
 import React from 'react';
+import Tipbox from './Tipbox';
 
 export default class CheckboxWithLabel extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export default class CheckboxWithLabel extends React.Component {
           onChange={this.onChange}
         />
         {this.state.isChecked ? this.props.labelOn : this.props.labelOff}
+        {/* <Tipbox text={"test text"}/> */}
       </label>
     );
   }
