@@ -2,12 +2,48 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Canvas</title>
+	<title>Position sticky</title>
+	<style>
+	  *{
+		  margin:0;
+		  padding:0;
+	  }
+	  header{
+		  height: 200px;
+		  border-bottom:1px solid grey;
+	  }
+	  main{
+		  height: 1800px;
+	  }
+	  .scrollbox{
+		  height: 800px;
+		  overflow: auto;
+		  border:1px solid olive;
+	  }
+	  footer{
+		  height: 300px;
+	  }
+	  .tip{
+		  width: 80%;
+		  margin:0 auto;
+		  border:1px solid green;
+		  position: sticky;
+		  top:10px;
+	  }
+	</style>
 </head>
 <body>
  
-	<script type="text/javascript">
-		  
-	</script>
+	<header>Test head</header>
+	<main>
+		<div class="scrollbox">
+		  <div>I'm a normal div I'm a normal div</div>	
+		  <div class="tip">Sticky area</div> 
+		  <div>I'm another block element</div>
+		</div>
+	</main>
+	<footer>
+		Test footer
+	</footer>
 </body>
 </html>
