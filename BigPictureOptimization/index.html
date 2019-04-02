@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input id="fileInput" type="file">
+    <canvas id="mycanvas"></canvas>
+    <!-- <script src='./bpgdec8.js'></script> -->
+    <script src='./bpgdec-0.9.4.js'></script>
+    <script>
+        window.onload = function(){
+
+            var img, canvas, ctx, upload;
+            canvas = document.getElementById("mycanvas");
+            ctx = canvas.getContext("2d");
+            upload = document.getElementsByTagName('input')[0];
+            upload.onchange = function(e) {
+                e.preventDefault();
+                var file = upload.files[0],
+                    reader = new FileReader();
+                reader.onload = function(event) {
+                   
+                    img = new BPGDecoder(ctx);
+                    img.onload = function() {
+                        /* draw the image to the canvas */
+                        canvas.width = this.imageData.width;
+                        canvas.height = this.imageData.height;
+                        ctx.putImageData(this.imageData, 0, 0);
+                    };
+                    img.load(event.target.result);
+                };
+                reader.readAsDataURL(file);
+                return false;
+            };
+
+            (function() {
+                var img, canvas, ctx;
+
+
+            })();
+            //
+
+        }
+    </script>
+</body>
+</html>
