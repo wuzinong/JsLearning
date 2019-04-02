@@ -1,0 +1,26 @@
+{
+  "name": "MochaChai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require babel-core/register --require ./test/setup.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.2.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "jsdom": "^13.2.0",
+    "mocha": "^6.0.2"
+  },
+  "dependencies": {
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  }
+}

@@ -5,3 +5,4 @@ jpeg rx
 https://bellard.org/bpg/
 
 http://xooyoozoo.github.io/yolo-octo-bugfixes/#moscow&jpg=s&jp2=s
+https://github.com/mirrorer/libbpg

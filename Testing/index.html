@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       window.onload = function(){
+
+        //  var obj = {};
+        //  var arr = [];
+         
+        //  var objProxy = new Proxy(Object.prototype,{
+        //      toString:function(val){
+        //         console.log("obj toString called")
+        //         console.log(val)
+        //      },
+        //      valueOf:function(val){
+        //         console.log("obj valueOf called")
+        //         console.log(val)
+        //      }
+        //  });
+
+        //  var arrProxy = new Proxy(arr,{
+        //     toString:function(val){
+        //         console.log("arr toString called")
+        //         console.log(val)
+        //      },
+        //      valueOf:function(val){
+        //         console.log("arr valueOf called")
+        //         console.log(val)
+        //      }
+        //  });
+
+        //  let objTest = Object.create(objProxy)
+
+        //  console.log(objTest-objTest);
+
+         obj = {
+            toString: function(val) {
+                console.log('obj toString called');
+                console.log(this)
+            },
+            valueOf: function(val) {
+                console.log('obj valueOf called')
+                console.log(this)
+            }
+        }
+        console.log(obj+obj);
+       }    
+    </script>
+</body>
+</html>
