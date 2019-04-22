@@ -8,6 +8,9 @@
  *    type: 'blockContent'
  *  }
  */
+
+// TODO: Consider creating common block definitions for the marketplace.
+
 export default {
   title: 'Block Content',
   name: 'blockContent',
