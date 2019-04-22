@@ -23,3 +23,10 @@ C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\obj\Debu
 C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.g.cshtml.cs
 C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\obj\Debug\netcoreapp2.1\ServerSideRendering.RazorTargetAssemblyInfo.cache
 C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\obj\Debug\netcoreapp2.1\ServerSideRendering.RazorTargetAssemblyInfo.cs
+C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\bin\Debug\netcoreapp2.1\ServerSideRendering.pdb
+C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\bin\Debug\netcoreapp2.1\ServerSideRendering.Views.dll
+C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\bin\Debug\netcoreapp2.1\ServerSideRendering.Views.pdb
+C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\obj\Debug\netcoreapp2.1\ServerSideRendering.Views.pdb
+C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\obj\Debug\netcoreapp2.1\ServerSideRendering.dll
+C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\obj\Debug\netcoreapp2.1\ServerSideRendering.pdb
+C:\My\GitHub\JsLearning\DotNetCoreSingleApplication\ServerSideRendering\obj\Debug\netcoreapp2.1\ServerSideRendering.csproj.CopyComplete

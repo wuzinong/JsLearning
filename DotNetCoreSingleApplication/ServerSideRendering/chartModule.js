@@ -1,4 +1,9 @@
-module.exports = function(callback){
-    let message = "Hello from node：" + new Date().toString();
-    callback(null,message);
+
+let generate = require("node-chartist");
+
+module.exports = function(callback,type,options,data){
+    generate(type,options,data).then(
+        result=>callback(null,result),
+        error=>callback(error)
+    )
 }

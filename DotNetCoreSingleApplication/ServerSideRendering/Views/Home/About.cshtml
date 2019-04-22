@@ -1,7 +1,14 @@
 ﻿@{
     ViewData["Title"] = "About";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+<div id="my-spa" 
+     asp-prerender-module="ClientApp/boot-server"
+     asp-prerender-data = "
+        new {
+            IsAdministrator = true,
+            Cookies = ViewContext.HttpContext.Request.Cookies
+        }
+     "
+     >
 
-<p>Use this area to provide additional information.</p>
+</div>
