@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from 'react-dom';
+import { render,hydrate } from 'react-dom';
 import {createStore,applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
@@ -9,4 +9,5 @@ import { HelloWorld } from './HelloWorld';
 
 // var Store = createStore(helloWorld_reducers,applyMiddleware(thunk));
 var Store = createStore(helloWorld_reducers,(window as any).ReduxInitialState,applyMiddleware(thunk));
-render(<Provider store={Store}><HelloWorld /></Provider>, document.querySelector('#content'));
+// render(<Provider store={Store}><HelloWorld /></Provider>, document.querySelector('#content'));
+hydrate(<Provider store={Store}><HelloWorld /></Provider>, document.querySelector('#content'));

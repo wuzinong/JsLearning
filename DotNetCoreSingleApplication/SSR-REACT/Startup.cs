@@ -58,6 +58,15 @@ namespace SSR_REACT
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            //  app.UseMvc(routes =>
+            // {
+            // routes.MapRoute(
+            //     name: "default",
+            //     template: "{controller=Home}/{action=Index}/{id?}");
+
+            //     routes.MapSpaFallbackRoute(name: "spa", templatePrefix: "support",
+            //         defaults: new { controller = "Home", action = "Index" });
+            // });
         }
     }
 }
