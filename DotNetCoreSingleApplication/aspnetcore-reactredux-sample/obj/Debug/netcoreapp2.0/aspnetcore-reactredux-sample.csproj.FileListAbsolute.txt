@@ -1,0 +1,11 @@
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\bin\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.deps.json
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\bin\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.runtimeconfig.json
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\bin\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.runtimeconfig.dev.json
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\bin\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.dll
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\bin\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.pdb
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\obj\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.csprojAssemblyReference.cache
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\obj\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.csproj.CoreCompileInputs.cache
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\obj\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.AssemblyInfoInputs.cache
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\obj\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.AssemblyInfo.cs
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\obj\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.dll
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-reactredux-sample\obj\Debug\netcoreapp2.0\aspnetcore-reactredux-sample.pdb

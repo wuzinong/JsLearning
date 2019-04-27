@@ -1,0 +1,11 @@
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\bin\Debug\netcoreapp2.0\aspnetcore-react-sample.deps.json
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\bin\Debug\netcoreapp2.0\aspnetcore-react-sample.runtimeconfig.json
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\bin\Debug\netcoreapp2.0\aspnetcore-react-sample.runtimeconfig.dev.json
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\bin\Debug\netcoreapp2.0\aspnetcore-react-sample.dll
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\bin\Debug\netcoreapp2.0\aspnetcore-react-sample.pdb
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\obj\Debug\netcoreapp2.0\aspnetcore-react-sample.csprojAssemblyReference.cache
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\obj\Debug\netcoreapp2.0\aspnetcore-react-sample.csproj.CoreCompileInputs.cache
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\obj\Debug\netcoreapp2.0\aspnetcore-react-sample.AssemblyInfoInputs.cache
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\obj\Debug\netcoreapp2.0\aspnetcore-react-sample.AssemblyInfo.cs
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\obj\Debug\netcoreapp2.0\aspnetcore-react-sample.dll
+D:\work\My\JsLearning\DotNetCoreSingleApplication\aspnetcore-react-sample\obj\Debug\netcoreapp2.0\aspnetcore-react-sample.pdb

@@ -1,0 +1,11 @@
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\bin\Debug\netcoreapp2.0\aspnetcore-angular-sample.deps.json
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\bin\Debug\netcoreapp2.0\aspnetcore-angular-sample.runtimeconfig.json
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\bin\Debug\netcoreapp2.0\aspnetcore-angular-sample.runtimeconfig.dev.json
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\bin\Debug\netcoreapp2.0\aspnetcore-angular-sample.dll
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\bin\Debug\netcoreapp2.0\aspnetcore-angular-sample.pdb
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\obj\Debug\netcoreapp2.0\aspnetcore-angular-sample.csprojAssemblyReference.cache
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\obj\Debug\netcoreapp2.0\aspnetcore-angular-sample.csproj.CoreCompileInputs.cache
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\obj\Debug\netcoreapp2.0\aspnetcore-angular-sample.AssemblyInfoInputs.cache
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\obj\Debug\netcoreapp2.0\aspnetcore-angular-sample.AssemblyInfo.cs
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\obj\Debug\netcoreapp2.0\aspnetcore-angular-sample.dll
+D:\work\Git\JsLearning\DotNetCoreSingleApplication\aspnetcore-angular-sample\obj\Debug\netcoreapp2.0\aspnetcore-angular-sample.pdb

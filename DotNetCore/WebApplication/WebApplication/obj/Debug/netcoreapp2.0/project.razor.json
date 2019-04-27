@@ -1,21 +1,6 @@
 {
-<<<<<<< HEAD
   "ProjectFilePath": "d:\\work\\My\\JsLearning\\DotNetCore\\WebApplication\\WebApplication\\WebApplication.csproj",
   "TargetFramework": "netcoreapp2.0",
   "TagHelpers": [],
   "Configuration": null
-=======
-  "ProjectFilePath": "c:\\My\\GitHub\\JsLearning\\DotNetCore\\WebApplication\\WebApplication\\WebApplication.csproj",
-  "TargetFramework": "netcoreapp2.0",
-  "TagHelpers": [],
-  "Configuration": {
-    "ConfigurationName": "MVC-2.0",
-    "LanguageVersion": "2.0",
-    "Extensions": [
-      {
-        "ExtensionName": "MVC-2.0"
-      }
-    ]
-  }
->>>>>>> 38a8e99095c6cdb7c0a6c040bcbceaccb2f17466
 }
