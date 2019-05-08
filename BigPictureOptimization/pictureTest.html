@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       *{
+           margin:0;
+           padding:0;
+       }
+       .container{
+           width:1000px;
+           margin:0 auto;
+       }
+       .c2{
+           margin-top:50px;
+       }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <picture>
+            <source srcSet="https://www.dnvgl.com/Images/Mongstad765x459px_tcm8-140530.jpg" media="(max-width: 400px)" />
+            <source srcSet="https://www.dnvgl.com/Images/Revolt765x459px_tcm8-140551.jpg" media="(max-width: 800px)" />
+            <source srcSet="https://www.dnvgl.com/Images/data_analytics2_765x459pxl_tcm8-135822.jpg" media="(max-width: 1200px)" />
+            <img src="https://www.dnvgl.com/Images/Food_HERO4_2500x1182_compressed_tcm8-140636.jpg"
+                srcSet="
+                    https://www.dnvgl.com/Images/hospital765x459pxl_tcm8-146824.jpg 320w,
+                    https://www.dnvgl.com/Images/Viewpoint_FoodSafety_765x459_compressed_tcm8-142628.jpg 480w,
+                    https://www.dnvgl.com/Images/DataScience765x459px_tcm8-140531.jpg 800w,
+                    "
+                sizes="(max-width: 320px) 280px,
+                     (max-width: 480px) 440px,
+                     800px"
+        />
+        </picture>
+    </div>
+
+    <div class="container c2">
+            <img src="https://www.dnvgl.com/Images/KL_Cru_112_Industry_Container_Ship_Blue_Ocean_tcm8-147168.jpg"
+                srcSet="
+                    https://www.dnvgl.com/Images/hospital765x459pxl_tcm8-146824.jpg 320w,
+                    https://www.dnvgl.com/Images/Viewpoint_FoodSafety_765x459_compressed_tcm8-142628.jpg 480w,
+                    https://www.dnvgl.com/Images/DataScience765x459px_tcm8-140531.jpg 800w,
+                    "
+                sizes="(max-width: 320px) 280px,
+                     (max-width: 480px) 440px,
+                     800px"
+            />
+    </div>
+
+    <div class="container c2">
+        <picture>
+            <source srcSet="https://www.dnvgl.com/Images/Mongstad765x459px_tcm8-140530.jpg" media="(max-width: 400px)" />
+            <source srcSet="https://www.dnvgl.com/Images/Revolt765x459px_tcm8-140551.jpg" media="(max-width: 800px)" />
+            <source srcSet="https://www.dnvgl.com/Images/data_analytics2_765x459pxl_tcm8-135822.jpg" media="(max-width: 1200px)" />
+            <img src="https://www.dnvgl.com/Images/Food_HERO4_2500x1182_compressed_tcm8-140636.jpg" alt="" />
+        </picture>
+    </div>
+</body>
+</html>

@@ -11,6 +11,33 @@
         <img src="./webp-Jpg.jpg" alt="">
         <img src="./webp-webp.webp" alt="">
     </div>
+
+
+    <picture>
+        <source srcSet={"https://www.dnvgl.com/Images/framework_cities765x459pxl_tcm8-137699.jpg"} media="(min-width: 1200px)" />
+        <source srcSet={"https://www.dnvgl.com/Images/Viewpoint_FoodSafety_765x459_compressed_tcm8-142628.jpg"} media="(min-width: 800px)" />
+        <source srcSet={"https://www.dnvgl.com/Images/hospital765x459pxl_tcm8-146824.jpg"} media="(min-width: 320px)" />
+        <img alt={imageUrl}
+            src={"https://www.dnvgl.com/Images/DataScience765x459px_tcm8-140531.jpg"}/>
+    </picture>
+
+
+
+    <img alt={imageUrl}
+                        srcSet={
+                            `https://www.dnvgl.com/Images/Viewpoint_FoodSafety_765x459_compressed_tcm8-142628.jpg 450w,
+                             https://www.dnvgl.com/Images/DataScience765x459px_tcm8-140531.jpg 960w,
+                             https://www.dnvgl.com/Images/framework_cities765x459pxl_tcm8-137699.jpg 1200w
+                            `
+                        }
+                        sizes={
+                            `(max-width: 552px) 450px, 
+                             (max-width: 1062px) 960px,
+                             1200px`
+                        }
+                        src={"https://www.dnvgl.com/Images/hospital765x459pxl_tcm8-146824.jpg"}
+                    />
+
     <script src='./webpjs.min.js'></script>
 </body>
 </html>
