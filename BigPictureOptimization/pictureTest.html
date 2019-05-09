@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- <div class="container">
         <picture>
             <source srcSet="https://www.dnvgl.com/Images/Mongstad765x459px_tcm8-140530.jpg" media="(max-width: 400px)" />
             <source srcSet="https://www.dnvgl.com/Images/Revolt765x459px_tcm8-140551.jpg" media="(max-width: 800px)" />
@@ -36,28 +36,79 @@
                      800px"
         />
         </picture>
-    </div>
+    </div> -->
 
+    <!-- <h2>举个栗子：<img sizes=" (max-width: 360px) 200px,(max-width: 480px) 300px,400px" >srcset="a.jpg 400w,b.jpg 700w">
+
+        当视区宽度为375px时，满足max-width: 480px的媒体条件，故图像尺寸为300px. 假设当前设备的dpr为2.0,那么就会去srcset中寻找300*2=600w的宽度描述符，若没有找到，则寻找更大的，找到700w，图片显示b.jpg
+        
+        若没有找到更大的，则往剩下的中选最大的
+        
+        再举个栗子 dpr1.0 视口大小375
+        
+        <img class="image" src="128px.jpg" srcset="128px.jpg 128w, 256px.jpg 256w,512px.jpg 512w" sizes="(max-width: 360px) 100px, 200px">
+        最终呈现width=200px的256px.jpg</h2> -->
+        
     <div class="container c2">
-            <img src="https://www.dnvgl.com/Images/KL_Cru_112_Industry_Container_Ship_Blue_Ocean_tcm8-147168.jpg"
+            <img src="./img/test-6000.jpg"
                 srcSet="
-                    https://www.dnvgl.com/Images/hospital765x459pxl_tcm8-146824.jpg 320w,
-                    https://www.dnvgl.com/Images/Viewpoint_FoodSafety_765x459_compressed_tcm8-142628.jpg 480w,
-                    https://www.dnvgl.com/Images/DataScience765x459px_tcm8-140531.jpg 800w,
+                    ./img/test-2500.jpg 2500w,
+                    ./img/test-765.jpg 765w,
+                    ./img/test-389.jpg 389w,
+                    ./img/test-276.jpg 320pw,
                     "
-                sizes="(max-width: 320px) 280px,
-                     (max-width: 480px) 440px,
-                     800px"
+                sizes="(max-width: 320px) 320px,
+                       (max-width: 400px) 389px,
+                       (max-width: 765px) 765px,
+                       (max-width: 2500px) 2500px,
+                    2000px" 
             />
     </div>
 
+
+    <!-- sizes="(max-width: 320px) 280px,
+    (max-width: 480px) 440px,
+    800px" -->
     <div class="container c2">
         <picture>
-            <source srcSet="https://www.dnvgl.com/Images/Mongstad765x459px_tcm8-140530.jpg" media="(max-width: 400px)" />
-            <source srcSet="https://www.dnvgl.com/Images/Revolt765x459px_tcm8-140551.jpg" media="(max-width: 800px)" />
-            <source srcSet="https://www.dnvgl.com/Images/data_analytics2_765x459pxl_tcm8-135822.jpg" media="(max-width: 1200px)" />
-            <img src="https://www.dnvgl.com/Images/Food_HERO4_2500x1182_compressed_tcm8-140636.jpg" alt="" />
+            <source srcSet="./img/test-276.jpg" media="(max-width: 320px)" />
+            <source srcSet="./img/test-389.jpg" media="(max-width: 400px)" />
+            <source srcSet="./img/test-765.jpg" media="(max-width: 800px)" />
+            <source srcSet="./img/test-2500.jpg" media="(max-width: 1200px)" />
+            <img src="./img/test-6000.jpg" alt="" />
         </picture>
     </div>
+
+    <h2>使用更加现代化的图片格式（webp,jbpg2000 etc.）</h2>
+    <picture>
+        <source type="image/webp" srcset="./webp-webp.webp"> 
+        <img src="./img/test-276.jpg" alt="默认对不支持该特性的浏览器做兼容">
+    </picture>
+
+
+    <script>
+       //可以通过js判断屏幕分辨率后懒加载更高质量的图片
+       //https://juejin.im/post/58b526db8d6d810057639c6f
+       /* 根据cookie返回图片是否webp的地址 */
+/* 根据dpr返回不同尺寸的图片 */
+        function getwebpsrc (imgsrc) {
+            var areaInfo = '';
+            if (window.devicePixelRatio && window.devicePixelRatio <= 1) {
+                var area = imgsrc.match(/[0-9]+x[0-9]+/);
+                if (area) {
+                    var areaSplit = area[0].split('x');
+                    areaInfo = areaSplit[0] /2 + 'x' + areaSplit[1] /2;
+                    imgsrc = imgsrc.replace(/[0-9]+x[0-9]+/, areaInfo)
+                }
+            }
+            var needwebp = false,
+                src = '';
+            if (/webp_showjoy=available/.test(document.cookie)) {
+                needwebp = true;
+            }
+            src = needwebp ? imgsrc + '.webp' : imgsrc;
+            return src;
+        }
+    </script>
 </body>
 </html>
