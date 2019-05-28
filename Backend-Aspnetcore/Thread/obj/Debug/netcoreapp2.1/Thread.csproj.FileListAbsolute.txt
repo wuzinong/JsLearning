@@ -1,0 +1,11 @@
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\obj\Debug\netcoreapp2.1\Thread.csprojAssemblyReference.cache
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\obj\Debug\netcoreapp2.1\Thread.csproj.CoreCompileInputs.cache
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\obj\Debug\netcoreapp2.1\Thread.AssemblyInfoInputs.cache
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\obj\Debug\netcoreapp2.1\Thread.AssemblyInfo.cs
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\bin\Debug\netcoreapp2.1\Thread.deps.json
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\bin\Debug\netcoreapp2.1\Thread.runtimeconfig.json
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\bin\Debug\netcoreapp2.1\Thread.runtimeconfig.dev.json
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\bin\Debug\netcoreapp2.1\Thread.dll
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\bin\Debug\netcoreapp2.1\Thread.pdb
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\obj\Debug\netcoreapp2.1\Thread.dll
+C:\My\GitHub\JsLearning\Backend-Aspnetcore\Thread\obj\Debug\netcoreapp2.1\Thread.pdb
