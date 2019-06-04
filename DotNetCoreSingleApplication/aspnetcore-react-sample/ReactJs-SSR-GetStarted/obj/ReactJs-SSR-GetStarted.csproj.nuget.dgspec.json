@@ -1,0 +1,69 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\My\\GitHub\\JsLearning\\DotNetCoreSingleApplication\\aspnetcore-react-sample\\ReactJs-SSR-GetStarted\\ReactJs-SSR-GetStarted.csproj": {}
+  },
+  "projects": {
+    "C:\\My\\GitHub\\JsLearning\\DotNetCoreSingleApplication\\aspnetcore-react-sample\\ReactJs-SSR-GetStarted\\ReactJs-SSR-GetStarted.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\My\\GitHub\\JsLearning\\DotNetCoreSingleApplication\\aspnetcore-react-sample\\ReactJs-SSR-GetStarted\\ReactJs-SSR-GetStarted.csproj",
+        "projectName": "ReactJs-SSR-GetStarted",
+        "projectPath": "C:\\My\\GitHub\\JsLearning\\DotNetCoreSingleApplication\\aspnetcore-react-sample\\ReactJs-SSR-GetStarted\\ReactJs-SSR-GetStarted.csproj",
+        "packagesPath": "C:\\Users\\guxh\\.nuget\\packages\\",
+        "outputPath": "C:\\My\\GitHub\\JsLearning\\DotNetCoreSingleApplication\\aspnetcore-react-sample\\ReactJs-SSR-GetStarted\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\guxh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://osl1843.verit.dnv.com/nuget": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://dnvgl-one.pkgs.visualstudio.com/_packaging/ECO-MyServices/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.All": {
+              "target": "Package",
+              "version": "[2.1.5, )"
+            },
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.1.5, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

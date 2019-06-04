@@ -20,20 +20,4 @@ function retrieveData() {
     };
 }
 exports.retrieveData = retrieveData;
-// export function retrieveData() {
-//     return async (dispatch: <T>(action: any) => T, getState: () => any) => {
-//         try {
-//             // var p =await fetch('/Home/GetHelloWorldData', { method: 'get' });
-//             dispatch(receiveHelloWorldData({
-//                 status:"1232dd",
-//                 count:111
-//             }))
-//         } catch (error) {
-//             dispatch(receiveHelloWorldData({
-//                 status:"sdfasdfasdf",
-//                 count:111
-//             }))
-//         }
-//     }
-// }
 //# sourceMappingURL=async-thunks.js.map

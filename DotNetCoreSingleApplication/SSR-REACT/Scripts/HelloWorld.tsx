@@ -14,10 +14,14 @@ class Comp extends React.Component<Props_redux, IState> {
         super(props);
     }
     componentDidMount() {
-        if (!this.props.status) this.props.dispatch(retrieveData()); // only get data when it's not available
+        //if (!this.props.status) this.props.dispatch(retrieveData()); // only get data when it's not available
+    }
+    componentWillMount() {
+        
     }
 
     render() {
+        if (!this.props.status) this.props.dispatch(retrieveData()); 
         const { status, count } = this.props;
 
         var content = null;
