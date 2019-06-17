@@ -25,9 +25,9 @@
 <body>
     <div class="container">
         <h1>测试标题</h1>
-        <img src="./1.jpg" alt="test1">
+        <img src="1.png" alt="test1">
         <h2>证书</h2>
-        <img src="./2.jpg" alt="">
+        <img src="2.jpg" alt="">
     </div>
     <button class="save">保存图片</button>
     <a href="" id="save_href"></a>
@@ -111,8 +111,6 @@
         * @param  {String} filename 文件名
         */
         function saveFile(data, filename) {
-            console.log(data);
-            debugger;
             const save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
             save_link.href = data;
             save_link.download = filename;
@@ -153,19 +151,30 @@
             });
         }
         
+        function batchBase64(){
+            var imgs =Array.prototype.slice.apply(document.getElementsByTagName("img"));
+            imgs.forEach(element => {
+                console.log(element)
+            });
+        }
 
        window.onload = function(){
             var saveBtn = document.querySelector(".save");
-            var ele = document.querySelector(".container");
+            var element = document.querySelector(".container");
 
             var svaeHref = document.getElementById("save_href");
+         
 
             saveBtn.addEventListener("click",function(){
-                save(ele); 
-                // drawCanvas(".container").then(canvas => {
-                    //image.setAttribute("crossOrigin",'Anonymous')
-                //   saveFile(convertCanvasToImage(canvas),"test.png")
-                // })
+                batchBase64()
+                // var opt = {
+                // allowTaint:true
+                // }
+                // html2canvas(document.body,opt).then(function(canvas){
+                //     // document.body.appendChild(canvas);
+                //     var result = convertCanvasToImage(canvas);
+                //     document.body.appendChild(result)
+                // });
             });
 
        }
