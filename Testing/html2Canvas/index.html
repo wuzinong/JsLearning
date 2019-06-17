@@ -154,7 +154,26 @@
         function batchBase64(){
             var imgs =Array.prototype.slice.apply(document.getElementsByTagName("img"));
             imgs.forEach(element => {
-                console.log(element)
+                let img = new Image();
+
+                img.onload = () => {
+                    debugger;
+                    const c = document.createElement('canvas');
+
+                    c.width = img.naturalWidth;
+                    c.height = img.naturalHeight;
+
+                    let cxt = c.getContext('2d');
+
+                    cxt.drawImage(img, 0, 0);
+                    // 得到图片的base64编码数据
+                    var temp = c.toDataURL('image/png');
+                    console.log(temp)
+                    element.setAttribute("src",temp);
+                };
+
+                img.setAttribute('crossOrigin', true);
+                img.src = element.getAttribute("src");
             });
         }
 
@@ -166,15 +185,18 @@
          
 
             saveBtn.addEventListener("click",function(){
-                batchBase64()
-                // var opt = {
-                // allowTaint:true
-                // }
-                // html2canvas(document.body,opt).then(function(canvas){
-                //     // document.body.appendChild(canvas);
-                //     var result = convertCanvasToImage(canvas);
-                //     document.body.appendChild(result)
-                // });
+                //batchBase64()
+
+                var opt = {
+                allowTaint:true
+                }
+                html2canvas(document.body,opt).then(function(canvas){
+                    // document.body.appendChild(canvas);
+                    // var result = convertCanvasToImage(canvas);
+                    // document.body.appendChild(result)
+                });
+
+
             });
 
        }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       *{
+           margin:0;
+           padding:0;
+       }
+       .container{
+           max-width:800px;
+           border:1px solid olive;
+           margin:0 auto;
+           text-align: center;
+       }
+       img{
+           width:100%;
+       }
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>测试标题</h1>
+        <img src="1.png" alt="test1">
+        <h2>证书</h2>
+        <img src="2.jpg" alt="">
+    </div>
+    <button class="save">保存图片</button>
+    <a href="" id="save_href"></a>
+
+    <script src="domtoimage.min.js"></script>
+    <script>
+         window.onload = function(){
+            var saveBtn = document.querySelector(".save");
+            var element = document.querySelector(".container");
+
+
+            saveBtn.addEventListener("click",function(){
+                domtoimage.toPng(element)
+                    .then(function (dataUrl) {
+                        var img = new Image();
+                        img.src = dataUrl;
+                        document.body.appendChild(img);
+                });
+            });
+
+       }
+    </script>
+</body>
+</html>
