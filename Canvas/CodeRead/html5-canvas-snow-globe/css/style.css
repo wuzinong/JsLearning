@@ -1,0 +1,12 @@
+:root {
+  font-family: 'Charm', cursive;
+}
+
+body {
+  background: #FFE7BA;
+}
+
+.textSpan {
+  font-size: 10vw;
+  height: 80vh;
+}
