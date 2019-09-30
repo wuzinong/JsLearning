@@ -31,3 +31,7 @@ driver.get("https://storetest.veracity.com");
 // driver.quit(); //关闭浏览器
 // });
 
+// driver.findElement(By.linkText("Support")).click();
+// driver.findElement(By.css(".search-section input")).sendKeys("automation");
+// driver.sleep(5*1000);
+// driver.findElement(By.css(".search-section a")).click();
