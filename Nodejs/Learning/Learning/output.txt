@@ -1,1 +1,3 @@
-simple test learning
+
+QAZWSXEDCRFVTGBYHNUJMIKOLP
+Simple learning from writeFile
