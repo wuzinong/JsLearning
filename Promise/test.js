@@ -185,3 +185,45 @@ const mockAjax = (url, s, callback) => {
   }, error => {
       console.log(error);
   });
+
+  
+
+  class PromiseTest{
+      callbacks = [];
+      state = 'pending';
+      value = null;
+      constructor(fn){
+         fn(tis.resolve.bind(this))
+      }
+      then(onFulfilled){
+          return new Promise(resolve=>{
+              this.handle({
+                  onFulfilled:onFulfilled,
+                  resolve:resove
+              })
+          })
+      }
+      handle(callback){
+         if(this.state === 'pending'){
+             this.callbacks.push(callback);
+             return;
+         }
+         if(!callback.onFulfilled){
+             callback.resolve(this.value);
+         }
+         let ret = callback.onFulfilled(this.value);
+         callback.resolve(ret);
+      }
+      resolve(value){
+         if(value && (typeof value === 'object' || typeof value ==='function')){
+             let then = value.then;
+             if(typeof then === 'function'){
+                 then.call(value,this.resolve.bind(this));
+             }
+         }
+
+         this.state = 'pending';
+         this.value = value;
+         this.callbacks.forEach(fn=>fn(value))
+      }
+  }
