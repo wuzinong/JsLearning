@@ -193,37 +193,61 @@ const mockAjax = (url, s, callback) => {
       state = 'pending';
       value = null;
       constructor(fn){
-         fn(tis.resolve.bind(this))
+          fn();
       }
-      then(onFulfilled){
-          return new Promise(resolve=>{
-              this.handle({
-                  onFulfilled:onFulfilled,
-                  resolve:resove
-              })
-          })
+
+      then(onFulfilled,onRejected){
+         return new Promise((resolve,reject)=>{
+             this.handle({
+                 onFulfilled:onFulfilled,
+                 onRejected:onRejected,
+                 resolve:resolve,
+                 reject:reject
+             });
+         })
       }
+
       handle(callback){
          if(this.state === 'pending'){
              this.callbacks.push(callback);
              return;
          }
-         if(!callback.onFulfilled){
-             callback.resolve(this.value);
+         let cb = this.state === 'fulfilled' ? callback.onFulfilled : callback.onRejected;
+         if(!cb){
+             cb = this.state === 'fulfilled' ? callback.resolve : callback.reject;
+             cb(this.value);
+             return;
          }
-         let ret = callback.onFulfilled(this.value);
-         callback.resolve(ret);
-      }
-      resolve(value){
-         if(value && (typeof value === 'object' || typeof value ==='function')){
-             let then = value.then;
-             if(typeof then === 'function'){
-                 then.call(value,this.resolve.bind(this));
-             }
-         }
+         let ret;
+         try {
+             ret = cb(this.value);
+             cb = this.state === 'fulfiled' ? callback.resolve : callback.reject;
 
-         this.state = 'pending';
-         this.value = value;
-         this.callbacks.forEach(fn=>fn(value))
+         } catch (error) {
+             ret = error;
+             cb = callback.reject
+         }finally{
+             cb(ret);
+         }
+      }
+
+      resolve(value){
+            
+          if(value && (typeof value === 'object' || typeof value ==='function')){
+              let then = value.then;
+              if(typeof then === 'function'){
+                  then.call(value,this.resolve.bind(this),this.reject.bind(this));
+                  return;
+              }
+          }
+
+          this.state = 'fulfilled';
+          this.value = value;
+          this.callbacks.forEach(fn=> fn(this.value));
+      }
+      reject(value){
+          this.state = 'rejected';
+          this.value = value;
+          this.callbacks.forEach(fn=>fn(this.value));
       }
   }
