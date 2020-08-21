@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+
+        .container{
+            width:800px;
+            border:1px solid olive;
+            margin:20px auto;
+            padding:10px 0;
+        }
+        .block{
+            width:400px;
+            height:200px;
+            border:1px dashed green;
+            margin:20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+    </div>
+
+    <script>
+        window.onload = function(){
+          
+
+            window.addEventListener("scroll",(e)=>{
+                //window.innerHeight/Width (浏览器窗口高度，不包含工具栏，菜单等，仅仅是可视区域dom的height)
+                //window.outerHeight (浏览器窗口高度，包含工具栏、菜单等,整个浏览器的height)
+                //clientHeight (padding + height)不包含滚动条部分,也就是说不包含隐藏的部分
+                //pageXOffset属性：整数只读属性，表示文档向右滚动过的像素数
+                //pageYOffset属性：整数只读属性，表示文档向下滚动过的像素数
+
+
+                //元素对象：
+
+                //offsetLeft、offsetTop属性：获取元素相对于文档左上角的坐标位置
+
+                
+                let innerHeight = window.innerHeight; 
+                let outerHeight = window.outerHeight;
+                let clientHeight = document.documentElement.clientHeight;
+                let scrollHeight = document.documentElement.scrollHeight;
+                let scrollY = window.scrollY;
+                let offsetHeight = document.documentElement.offsetHeight;
+
+
+                //document.body.scrollHeight 和 document.body.clientHeight 不一致
+                //document.documentElement.offsetHeight:不算margin
+                //document.body.offsetHeight:margin也会计算
+
+                console.log(`innerHeight: ${innerHeight} outerHeight:${outerHeight} clientHeight:${clientHeight}  scrollHeight: ${scrollHeight}  scrollY:${scrollY} offsetHeight: ${offsetHeight}`);
+            });
+        }
+    </script>
+</body>
+</html>
