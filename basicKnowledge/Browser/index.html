@@ -9,6 +9,11 @@
             margin:0;
             padding:0;
         }
+       html{
+height:100%;}
+        body{
+        height:100%;        
+}
 
         .container{
             width:800px;
@@ -38,9 +43,27 @@
           
 
             window.addEventListener("scroll",(e)=>{
+
+	//height: 样式中指定的高度,是content的高度，不含paddding及其他。
+	//clientHeight = height + padding*2(根据设置的具体情况计算)
+	//clientHeight: 包含padding的高度
+	//clientHeight = height + padding*2(根据设置的具体情况计算)
+	 //clientHeight (padding + height)不包含滚动条部分,也就是说不包含隐藏的部分
+	//clientHeight是浏览器可展示区域高度（去除菜单导航等）,永远不变
+	//offsetHeight: 包含border的高度；
+	//offsetHeight =clientHeight+borderWidth*2
+	//上面的计算方法，不适用于html元素。其他都适用。
+
+	//scrollTop：往下滚了多少
+	//scrollHeight:  当前容器没有滚动条时，scrollHeight = clientHeight
+	// 当前容器的内容超过容器的高度，出现滚动条时
+	//scrollHeight = 当前容器的padding + child容器(滚动内容)的总高度（offsetHeight+margin）
+
+
+
                 //window.innerHeight/Width (浏览器窗口高度，不包含工具栏，菜单等，仅仅是可视区域dom的height)
                 //window.outerHeight (浏览器窗口高度，包含工具栏、菜单等,整个浏览器的height)
-                //clientHeight (padding + height)不包含滚动条部分,也就是说不包含隐藏的部分
+               
                 //pageXOffset属性：整数只读属性，表示文档向右滚动过的像素数
                 //pageYOffset属性：整数只读属性，表示文档向下滚动过的像素数
 

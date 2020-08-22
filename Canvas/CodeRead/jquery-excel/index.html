@@ -1,0 +1,41 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery简易版的Excel表格功能插件DEMO演示</title>
+
+<link rel="stylesheet" type="text/css" href="css/font-awesome.4.6.0.css">
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/excel.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	//$(".wyb-excel").setExcelHtml("<table width='100%'><tbody><tr style='height: 38px;'><td style='width: 227px;'></td><td style='width: 46px;'></td><td style='width: 133px;' rowspan='3' colspan='2'></td><td style='width: 133px; display: none;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 134px;'></td><td style='width: 135px;'></td><td style='width: 135px;'></td></tr><tr style='height: 153px;'><td style='width: 227px;' rowspan='3' colspan='2'></td><td style='width: 46px; display: none;'></td><td style='width: 133px; display: none;'></td><td style='width: 133px; display: none;'></td><td style='width: 133px; text-align: center;'>wyb&nbsp;</td><td style='width: 133px;'></td><td style='width: 134px;'></td><td style='width: 135px;'></td><td style='width: 135px;'></td></tr><tr style='height: 38px;'><td style='width: 227px; display: none;'></td><td style='width: 46px; display: none;'></td><td style='width: 133px; display: none;'></td><td style='width: 133px; display: none;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 134px;'></td><td style='width: 135px;'></td><td style='width: 135px;'></td></tr><tr style='height: 38px;'><td style='width: 227px; display: none;'></td><td style='width: 46px; display: none;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 134px;'></td><td style='width: 135px;'></td><td style='width: 135px;'></td></tr><tr style='height: 38px;'><td style='width: 227px;'></td><td style='width: 46px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 134px;'></td><td style='width: 135px;'></td><td style='width: 135px;'></td></tr><tr style='height: 38px;'><td style='width: 227px;' rowspan='1' colspan='3'>这是为什么啊啊</td><td style='width: 46px; display: none;'></td><td style='width: 133px; display: none;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 134px;'></td><td style='width: 135px;'></td><td style='width: 135px;'></td></tr><tr style='height: 154px;'><td style='width: 227px;'></td><td style='width: 46px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 134px;'></td><td style='width: 135px;'></td><td style='width: 135px;'></td></tr><tr style='height: 38px;'><td style='width: 227px;'></td><td style='width: 46px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 134px;'></td><td style='width: 135px;'></td><td style='width: 135px;'></td></tr><tr style='height: 38px;'><td style='width: 227px;'></td><td style='width: 46px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 133px;'></td><td style='width: 134px;'></td><td style='width: 135px;'></td><td style='width: 135px;'></td></tr></tbody></table>");
+	$(".wyb-excel").wybExcel();
+});
+
+function getHtml(){
+	var t=$(".wyb-excel").getExcelHtml();
+	$("#test").html(t);
+}
+</script>
+
+<style type="text/css">
+#test{width: 1200px;height:600px;margin: 0 auto;margin-top: 20px;padding: 17px;}
+</style>
+
+<link rel="stylesheet" href="css/excel.css" type="text/css" />
+
+</head>
+<body>
+
+<h3>按下鼠标左键不放，可范围选择多个区块，鼠标右键进行操作</h3>
+<div class="wyb-excel" style="width:1000px;margin: 0 auto;"></div>
+
+<div style="text-align:center;clear:both;">
+<script src="/gg_bd_ad_720x90.js" type="text/javascript"></script>
+<script src="/follow.js" type="text/javascript"></script>
+</div>
+
+</body>
+</html>

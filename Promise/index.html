@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        window.onload = function(){
+            
+                //完整的实现
+                class Promise {
+                    callbacks = [];
+                    state = 'pending';//增加状态
+                    value = null;//保存结果
+                    constructor(fn) {
+                        fn(this._resolve.bind(this));
+                        this.rnum = ~~(Math.random()*100);
+                        console.log("constructor this:", this)
+                    }
+                    then(onFulfilled) {
+                        return new Promise(resolve => {
+                            console.log("then this:",this)
+                            this._handle({
+                                onFulfilled: onFulfilled || null,
+                                resolve: resolve
+                            });
+                        });
+                    }
+                    _handle(callback) {
+                        console.log("handle this:",this)
+                        if (this.state === 'pending') {
+                            this.callbacks.push(callback);
+                            return;
+                        }
+                        //如果then中没有传递任何东西
+                        if (!callback.onFulfilled) {
+                            callback.resolve(this.value);
+                            return;
+                        }
+                        var ret = callback.onFulfilled(this.value);
+                        callback.resolve(ret);
+                    }
+                    _resolve(value) {
+                        console.log("resolve this:",this);
+                        this.state = 'fulfilled';//改变状态
+                        this.value = value;//保存结果
+                        this.callbacks.forEach(callback => this._handle(callback));
+                    }
+                }
+                debugger;
+            new Promise(resolve=>{
+                    console.log("111");
+                resolve("new value1")
+              
+            }).then(result=>{
+                console.log("22222:",result);
+                return "new value2"
+            }).then(res=>{
+                console.log("last:",res)
+            })
+        }
+    </script>
+</body>
+</html>
