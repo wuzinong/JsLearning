@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+       html{
+height:100%;}
+        body{
+        height:100%;        
+}
+
+        .container{
+            width:800px;
+            border:1px solid olive;
+            margin:20px auto;
+            padding:10px 0;
+        }
+        .block{
+            width:400px;
+            height:200px;
+            border:1px dashed green;
+            margin:20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+    </div>
+
+    <script>
+        window.onload = function(){
+          
+
+            window.addEventListener("scroll",(e)=>{
+
+	//height: 样式中指定的高度,是content的高度，不含paddding及其他。
+	//clientHeight = height + padding*2(根据设置的具体情况计算)
+	//clientHeight: 包含padding的高度
+	//clientHeight = height + padding*2(根据设置的具体情况计算)
+	 //clientHeight (padding + height)不包含滚动条部分,也就是说不包含隐藏的部分
+	//clientHeight是浏览器可展示区域高度（去除菜单导航等）,永远不变
+	//offsetHeight: 包含border的高度；
+	//offsetHeight =clientHeight+borderWidth*2
+	//上面的计算方法，不适用于html元素。其他都适用。
+
+	//scrollTop：往下滚了多少
+	//scrollHeight:  当前容器没有滚动条时，scrollHeight = clientHeight
+	// 当前容器的内容超过容器的高度，出现滚动条时
+	//scrollHeight = 当前容器的padding + child容器(滚动内容)的总高度（offsetHeight+margin）
+
+
+
+                //window.innerHeight/Width (浏览器窗口高度，不包含工具栏，菜单等，仅仅是可视区域dom的height)
+                //window.outerHeight (浏览器窗口高度，包含工具栏、菜单等,整个浏览器的height)
+               
+                //pageXOffset属性：整数只读属性，表示文档向右滚动过的像素数
+                //pageYOffset属性：整数只读属性，表示文档向下滚动过的像素数
+
+
+                //元素对象：
+
+                //offsetLeft、offsetTop属性：获取元素相对于文档左上角的坐标位置
+
+                
+                let innerHeight = window.innerHeight; 
+                let outerHeight = window.outerHeight;
+                let clientHeight = document.documentElement.clientHeight;
+                let scrollHeight = document.documentElement.scrollHeight;
+                let scrollY = window.scrollY;
+                let offsetHeight = document.documentElement.offsetHeight;
+
+
+                //document.body.scrollHeight 和 document.body.clientHeight 不一致
+                //document.documentElement.offsetHeight:不算margin
+                //document.body.offsetHeight:margin也会计算
+
+                console.log(`innerHeight: ${innerHeight} outerHeight:${outerHeight} clientHeight:${clientHeight}  scrollHeight: ${scrollHeight}  scrollY:${scrollY} offsetHeight: ${offsetHeight}`);
+            });
+        }
+    </script>
+</body>
+</html>
