@@ -33,3 +33,5 @@ var twoSum = function(nums, target) {
     }
     return result.sort();
 };
+
+//页面初始化的时候再app js中先预加载需要的数据。调用的时候查看数据是否存在，两者对比

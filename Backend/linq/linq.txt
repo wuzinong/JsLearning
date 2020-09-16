@@ -1,0 +1,330 @@
+//from https://www.cnblogs.com/liqingwen/p/5832322.html
+
+internal class Program
+{
+        private static void Main(string[] args)
+        {
+            //1.获取数据源
+            var nums = new int[7] { 0, 1, 2, 3, 4, 5, 6 };
+
+            //2.创建查询
+            var numQuery =
+                from num in nums
+                where (num % 2) == 0
+                select num;
+
+            //3.执行查询
+            foreach (var num in numQuery)
+            {
+                Console.WriteLine("{0}", num);
+            }
+        }
+}
+ 1.4 查询执行
+　　1.延迟执行
+　　　　如前所述，查询变量本身只是存储查询命令。  实际的查询执行会延迟到在 foreach 语句中循环访问查询变量时发生。 此概念称为“延迟执行”。
+
+　　2.强制立即执行
+　　　　对一系列源元素执行聚合函数的查询必须首先循环访问这些元素。Count、Max、Average 和 First 就属于此类查询。由于查询本身必须使用 foreach 以便返回结果，
+因此这些查询在执行时不使用显式 foreach 语句。另外还要注意，这些类型的查询返回单个值，而不是 IEnumerable 集合。 
+
+
+var numbers = new int[7] { 0, 1, 2, 3, 4, 5, 6 };
+
+    var evenNumQuery =
+        from num in numbers
+        where (num % 2) == 0
+        select num;
+
+    var evenNumCount = evenNumQuery.Count();
+
+
+若要强制立即执行任意查询并缓存其结果，可以调用 ToList<TSource> 或 ToArray<TSource> 方法。
+
+
+var numQuery2 =
+           (from num in numbers
+            where (num % 2) == 0
+            select num).ToList();
+
+var numQuery3 =
+          (from num in numbers
+           where (num % 2) == 0
+            select num).ToArray();
+
+二、基本 LINQ 查询操作
+  2.1 获取数据源：from
+　　在 LINQ 查询中，第一步是指定数据源。像在大多数编程语言中一样，必须先声明变量，才能使用它。在 LINQ 查询中，最先使用 from 子句的目的是引入数据源和范围变量。
+
+     //queryAllCustomers 是 IEnumerable<Cutsomer> 类型
+     //数据源 (customers) 和范围变量 (cust)
+     var queryAllCustomers = from cust in customers
+                                           select cust;
+
+2.2 筛选：where
+
+ var queryLondonCustomers = from cust in customers
+                 　　　　　　            where cust.City = "London"
+                  　　　　　              select cust;
+
+2.3 排序：orderby
+ var queryLondonCustomers = from cust in customers
+                                where cust.City = "London"
+                                orderby cust.Name descending 
+                                select cust;
+
+2.4 分组：group
+
+     var queryLondonCustomers = from cust in customers
+                      group cust by cust.City;
+  
+      foreach (var queryLondonCustomer in queryLondonCustomers)
+      {
+         Console.WriteLine(queryLondonCustomer.Key);
+         foreach (var cust in queryLondonCustomer)
+         {
+            Console.WriteLine(cust.Name);
+        }
+     }
+
+在本例中，cust.City 是键。
+
+在使用 group 子句结束查询时，结果采用列表的列表形式。列表中的每个元素是一个具有 Key 成员及根据该键分组的元素列表的对象。
+在循环访问生成组序列的查询时，您必须使用嵌套的 foreach 循环。外部循环用于循环访问每个组，内部循环用于循环访问每个组的成员。  
+
+如果您必须引用组操作的结果，可以使用 into 关键字来创建可进一步查询的标识符。
+
+1     //custQuery 是 IEnumable<IGrouping<string, Customer>> 类型
+2     var custQuery = from cust in customers
+3                     group cust by cust.City
+4                     into custGroup
+5                     where custGroup.Count() > 2
+6                     orderby custGroup.Key
+7                     select custGroup;
+
+2.5 联接：join
+
+1     var innerJoinQuery = from cust in customers
+2                      　　join dist in distributors on cust.City equals dist.City
+3                      　　select new {CustomerName = cust.Name, DistributorName = dist.Name};
+
+在 LINQ 中，join 子句始终针对对象集合而非直接针对数据库表运行。  
+
+在 LINQ 中，您不必像在 SQL 中那样频繁使用 join，因为 LINQ 中的外键在对象模型中表示为包含项集合的属性。
+2.6 选择（投影）：select
+　例如，您可以指定结果包含的是整个 Customer 对象、仅一个成员、成员的子集，还是某个基于计算或新对象创建的完全不同的结果类型。当 select 子句生成除源元素副本以外的内容时，该操作称为“投影”。
+
+ 
+
+三、使用 LINQ 进行数据转换
+　　语言集成查询 (LINQ) 不仅可用于检索数据，而且还是一个功能强大的数据转换工具。通过使用 LINQ 查询，您可以将源序列用作输入，
+并采用多种方式修改它以创建新的输出序列。您可以通过排序和分组来修改该序列，而不必修改元素本身。
+但是，LINQ 查询的最强大的功能是能够创建新类型。这一功能在 select 子句中实现。 例如，可以执行下列任务：  
+
+3.1 将多个输入联接到一个输出序列
+
+1     class Student
+ 2     {
+ 3         public string Name { get; set; }
+ 4 
+ 5         public int Age { get; set; }
+ 6 
+ 7         public string City { get; set; }
+ 8 
+ 9         public List<int> Scores { get; set; }
+10     }
+11 
+12     class Teacher
+13     {
+14         public int Id { get; set; }
+15 
+16         public string Name { get; set; }
+17 
+18         public int Age { get; set; }
+19 
+20         public string City { get; set; }
+21 
+22     }
+
+学生和老师两个类
+
+1     internal class Program
+ 2     {
+ 3         private static void Main(string[] args)
+ 4         {
+ 5             //创建第一个数据源
+ 6             var students = new List<Student>()
+ 7             {
+ 8                 new Student()
+ 9                 {
+10                     Age = 23,
+11                     City = "广州",
+12                     Name = "小C",
+13                     Scores = new List<int>(){85,88,83,97}
+14                 },
+15                 new Student()
+16                 {
+17                     Age = 18,
+18                     City = "广西",
+19                     Name = "小明",
+20                     Scores = new List<int>(){86,78,85,90}
+21                 },
+22                 new Student()
+23                 {
+24                     Age = 33,
+25                     City = "梦里",
+26                     Name = "小叁",
+27                     Scores = new List<int>(){86,68,73,97}
+28                 }
+29             };
+30 
+31             //创建第二个数据源
+32             var teachers = new List<Teacher>()
+33             {
+34                 new Teacher()
+35                 {
+36                     Age = 35,
+37                     City = "梦里",
+38                     Name = "啵哆"
+39                 },
+40                 new Teacher()
+41                 {
+42                     Age = 28,
+43                     City = "云南",
+44                     Name = "小红"
+45                 },
+46                 new Teacher()
+47                 {
+48                     Age = 38,
+49                     City = "河南",
+50                     Name = "丽丽"
+51                 }
+52             };
+53 
+54             //创建查询
+55             var peopleInDreams = (from student in students
+56                             where student.City == "梦里"
+57                             select student.Name)
+58                             .Concat(from teacher in teachers
+59                                     where teacher.City == "梦里"
+60                                     select teacher.Name);
+61 
+62             //执行查询
+63             foreach (var person in peopleInDreams)
+64             {
+65                 Console.WriteLine(person);
+66             }
+67 
+68             Console.Read();
+69         }
+70     }
+
+控制台输出代码。
+
+ 3.2 选择各个源元素的子集
+　　1. 若要只选择源元素的一个成员，请使用点运算。
+
+1     var query = from cust in Customers
+2                     select cust.City;
+
+　　2. 若要创建包含源元素的多个属性的元素，可以使用具有命名对象或匿名类型的对象初始值设定项。
+
+1     var query = from cust in Customer
+2                    select new {Name = cust.Name, City = cust.City};
+
+3.3 将内存中的对象转换为 XML
+
+//创建数据源
+            var students = new List<Student>()
+            {
+                new Student()
+                {
+                    Age = 18,
+                    Name = "小A",
+                    Scores = new List<int>() {88,85,74,66 }
+                },
+                new Student()
+                {
+                    Age = 35,
+                    Name = "小B",
+                    Scores = new List<int>() {88,85,74,66 }
+                },
+                new Student()
+                {
+                    Age = 28,
+                    Name = "小啥",
+                    Scores = new List<int>() {88,85,74,66 }
+                }
+            };
+
+            //创建查询
+            var studentsToXml = new XElement("Root",
+                from student in students
+                let x = $"{student.Scores[0]},{student.Scores[1]},{student.Scores[2]},{student.Scores[3]}"
+                select new XElement("student",
+                new XElement("Name", student.Name),
+                new XElement("Age", student.Age),
+                new XElement("Scores", x))
+            );
+
+            //执行查询
+            Console.WriteLine(studentsToXml);
+
+3.4 对源元素执行操作
+　　输出序列可能不包含源序列的任何元素或元素属性。输出可能是通过将源元素用作输入参数计算出的值的序列。
+五、LINQ 中的查询语法和方法语法
+　　我们编写的 LINQ 查询语法，在编译代码时，CLR 会将查询语法转换为方法语法。这些方法调用标准查询运算符的名称类似 Where、Select、GroupBy、Join、Max和 Average，我们也是可以直接使用这些方法语法的。  
+
+　　查询语法和方法语法语义相同，但是，许多人员发现查询语法更简单、更易于阅读。某些查询必须表示为方法调用。例如，必须使用方法调用表示检索元素的数量与指定的条件的查询。还必须使用方法需要检索元素的最大值在源序列的查询。System.Linq 命名空间中的标准查询运算符的参考文档通常使用方法语法。
+
+1         static void Main(string[] args)
+ 2         {
+ 3             var nums = new int[4] { 1, 2, 3, 4 };
+ 4             
+ 5             //创建查询表达式
+ 6             var qureyNums = from n in nums
+ 7                             where n % 2 == 0
+ 8                             orderby n descending
+ 9                             select n;
+10 
+11             Console.WriteLine("qureyNums:");
+12             foreach (var n in qureyNums)
+13             {
+14                 Console.WriteLine(n);
+15             }
+16     
+17             //使用方法进行查询
+18             var queryNums2 = nums.Where(n => n % 2 == 0).OrderByDescending(n => n);
+19 
+20             Console.WriteLine("qureyNums2:");
+21             foreach (var n in queryNums2)
+22             {
+23                 Console.WriteLine(n);
+24             }
+25 
+26             Console.Read();
+27         }
+
+下面的示例演示简单的查询表达式和编写为基于方法的查询的语义上等效的查询。
+
+两个示例的输出是相同的。您可以看到两种形式的查询变量的类型是相同的：IEnumerable<T>。  
+
+　　若要了解基于方法的查询，让我们进一步地分析它。注意，在表达式的右侧，where 子句现在表示为对 numbers 对象的实例方法，在您重新调用该对象时其类型为 IEnumerable<int>。如果您熟悉泛型 IEnumerable<T> 接口，那么您就会了解，它不具有 Where 方法。但是，如果您在 Visual Studio IDE 中调用 IntelliSense 完成列表，那么您不仅将看到 Where 方法，而且还会看到许多其他方法，如 Select、SelectMany、Join 和Orderby。下面是所有标准查询运算符。 
+
+  5.2 Lambda 表达式
+　　在前面的示例中，通知该条件表达式 (num % 2 == 0) 是作为内联参数。Where 方法：Where(num => num % 2 == 0) 此内联表达式称为 lambda 表达式。将代码编写为匿名方法或泛型委托或表达式树是一种便捷的方法，否则编写起来就要麻烦得多。=> 是 lambda 运算符，可读为“goes to”。运算符左侧的 num 是输入变量，与查询表达式中的 num 相对应。编译器可推断 num 的类型，因为它了解 numbers 是泛型 IEnumerable<T> 类型。lambda 表达式与查询语法中的表达式或任何其他 C# 表达式或语句中的表达式相同；它可以包括方法调用和其他复杂逻辑。“返回值”就是表达式结果。  
+
+ 
+
+  5.3 查询的组合性
+　　在上面的代码示例中，请注意 OrderBy 方法是通过在对 Where 的调用中使用点运算符来调用的。Where 生成筛选序列，然后 Orderby 通过对该序列排序来对它进行操作。因为查询会返回 IEnumerable，所以您可通过将方法调用链接在一起，在方法语法中将这些查询组合起来。这就是在您通过使用查询语法编写查询时编译器在后台所执行的操作。并且由于查询变量不存储查询的结果，因此您可以随时修改它或将它用作新查询的基础，即使在执行它后。
+
+
+
+
+
+
+
+
+
+
