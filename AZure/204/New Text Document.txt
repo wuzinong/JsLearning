@@ -72,3 +72,21 @@ https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-app-ma
 oauth2Permissions specifies the collection of OAuth 2.0 permission scopes that the web API (resource) app
 exposes to client apps. These permission scopes may be granted to client apps during consent
 For applications (Angular, Ember.js, React.js, and so on), Microsoft identity platform supports the OAuth 2.0 implicit Grant flow.
+
+
+-----ContentReview role
+https://docs.microsoft.com/en-us/graph/api/resources/approle?view=graph-rest-1.0
+allowedMemberTypes specifies whether this app role definition can be assigned to users and groups by setting
+to "User", or to other applications (that are accessing this application in daemon service scenarios) by setting
+to "Application", or to both.
+Scenario: In order to review content a user must be part of a ContentReviewer role.
+value specifies the value which will be included in the roles claim in authentication and access tokens.
+
+
+-----ContentUploadService deployment
+https://devblogs.microsoft.com/powershell/setting-network-location-to-private/
+
+
+
+-----monitor ContentUploadService
+https://docs.microsoft.com/sv-se/cli/azure/monitor/metrics/alert?view=azure-cli-latest
