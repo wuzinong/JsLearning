@@ -1,5 +1,6 @@
 
 -----Azure Database Migration Service
+https://azure.microsoft.com/en-us/updates/mongodb-to-azure-cosmos-db-online-and-offline-migrations-are-now-available/
 Migrate from on-premises or cloud implementations of MongoDB to Azure Cosmos DB with minimal
 downtime by using Azure Database Migration Service. Perform resilient migrations of MongoDB data at scale
 and with high reliability.
@@ -7,11 +8,13 @@ and with high reliability.
 
 
 -----on-premises data gateway
+https://docs.microsoft.com/en-us/azure/logic-apps/logic-apps-gateway-install
 Before you can connect to on-premises data sources from Azure Logic Apps, download and install the
 on-premises data gateway on a local computer. The gateway works as a bridge that provides quick data
 transfer and encryption between data sources on premises (not in the cloud) and your logic apps.
 
 -----ISEs
+https://docs.microsoft.com/en-us/azure/logic-apps/connect-virtual-network-vnet-isolated-environment-overview
 You can access to Azure Virtual Network resources from Azure Logic Apps by using integration service
 environments (ISEs).
 Sometimes, your logic apps and integration accounts need access to secured resources, such as virtual
@@ -21,6 +24,7 @@ integration accounts.
 
 
 -----Dynamic site acceleration
+https://docs.microsoft.com/en-us/azure/cdn/cdn-optimization-overview
 Dynamic site acceleration (DSA) is available for Azure CDN Standard from Akamai, Azure CDN Standard
 from Verizon, and Azure CDN Premium from Verizon profiles
 DSA includes various techniques that benefit the latency and performance of dynamic content. Techniques
@@ -28,7 +32,43 @@ include route and network optimization, TCP optimization, and more.
 
 
 -----Support message processing for ocean transport workflow
+https://docs.microsoft.com/bs-latn-ba/azure/logic-apps/logic-apps-enterprise-integration-metadata
 1. Create an integration account in the Azure portal
 2. Link the Logic App to the integration account
 3. Add partners, schemas, certificates, maps, and agreements
 4. Create a custom connector for the Logic App.
+
+
+-----An easy way to bring back your Azure VM with In-Place restore
+https://azure.microsoft.com/en-us/blog/an-easy-way-to-bring-back-your-azure-vm-with-in-place-restore/
+
+
+-----Standard - 10
+https://azure.microsoft.com/en-us/pricing/details/app-service/windows/
+Standard support auto-scaling  Max instances for standard is 10.
+
+
+-----Azure Blob storage output binding for Azure Functions
+https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-output?tabs=csharp
+
+
+-----Azure Application Gateway
+https://docs.microsoft.com/en-us/azure/web-application-firewall/ag/ag-overview
+https://www.upguard.com/blog/10-tips-for-securing-your-nginx-deployment
+Azure Web Application Firewall (WAF) on Azure Application Gateway provides centralized protection of
+your web applications from common exploits and vulnerabilities. Web applications are increasingly targeted
+by malicious attacks that exploit commonly known vulnerabilities. SQL injection and cross-site scripting are
+among the most common attacks.
+
+
+-----Azure Event Hub
+https://docs.microsoft.com/en-us/azure/event-grid/compare-messaging-services
+Azure Event Hub is used for telemetry and distributed data streaming.This service provides a single solution that enables rapid data retrieval for real-time processing as well as
+repeated replay of stored raw data. It can capture the streaming data into a file for processing and analysis.
+
+
+-----ContentAnalysisService.
+https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-app-manifest
+oauth2Permissions specifies the collection of OAuth 2.0 permission scopes that the web API (resource) app
+exposes to client apps. These permission scopes may be granted to client apps during consent
+For applications (Angular, Ember.js, React.js, and so on), Microsoft identity platform supports the OAuth 2.0 implicit Grant flow.
