@@ -90,3 +90,41 @@ https://devblogs.microsoft.com/powershell/setting-network-location-to-private/
 
 -----monitor ContentUploadService
 https://docs.microsoft.com/sv-se/cli/azure/monitor/metrics/alert?view=azure-cli-latest
+
+
+
+-----Azure API Management to publish APIs
+Rewrite the request URL to match to the format expected by the web service ------ outbound
+Remove the formatting text from response ------- inbound
+Forward the user ID that is  associated with ...... to the backend service  ------- Backend
+
+
+
+-----Azure Cache for Redis
+https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/cache-aspnet-session-state-provider
+
+
+
+-----Users must be authenticated before calling API methods. You must log the user’s name for each method call.
+You need to configure the API method calls.
+https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-how-to
+1. Authorize
+2. X-MS-CLIENT-PRINCIPAL-NAME
+
+
+
+-----uses Azure Application Insights for all telemetry and dependency tracking
+https://docs.microsoft.com/en-us/azure/azure-monitor/app/custom-operations-tracking
+
+
+-----Users will authenticate by using their Azure Active Directory (Azure AD) credentials
+https://blogs.msdn.microsoft.com/waws/2017/03/13/azure-app-service-authentication-aad-groups/
+1.Create a new Azure AD application’s manifest, set value of the groupMembershipClaims option to All 
+2.In the website, use the value of the groups claim from the JWI for the user to determine permissions
+
+
+-----Azure search
+https://docs.microsoft.com/en-us/azure/search/search-howto-dotnet-sdk
+1.Create a SearchlndexClient object to connect to the search index
+2.Create an IndexBatch that contains the documents which must be added
+3.Call the Documents.Index method of the SearchIndexClient and pass the IndexBatch

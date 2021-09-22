@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      text-align: center;
+    }
+    #canvas{
+      margin:20px auto;
+      border:1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width='800' height='800'></canvas>
+  <script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    function Rect(x,y,width,height,color){
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+      this.color = color;
+    }
+    Rect.prototype.draw = function(){
+       ctx.beginPath();
+       ctx.fillStyle = this.color;
+       ctx.fillRect(this.x,this.y,this.width,this.height);
+       ctx.strokeRect(this.x,this.y,this.width,this.height);
+    }
+
+    function Snake(length=0){
+      this.length = length;
+      this.head = new Rect(canvas.width/2,canvas.height/2,40,40,'red');
+      this.body = [];
+      let x = this.head.x -40;
+      let y = this.head.y;
+      for(let i=0;i<this.length;i++){
+        const rect = new Rect(x,y,40,40,'green');
+        this.body.push(rect);
+        x -= 40;
+      }
+    }
+
+    Snake.prototype.draw = function(){
+      this.head.draw();
+      this.body.forEach(item=>{
+        item.draw();
+      })
+    }
+
+    Snake.prototype.moveSnake = function(){
+      const rect = new Rect(this.head.x,this.head.y,this.head.width,this.head.height,'yellow');
+      this.body.unshift(rect);
+      this.body.pop();
+
+      switch(this.direction){
+        case 0:
+          this.head.x -= this.head.width;
+        case 1:
+          this.head.y -= this.head.height;
+        case 2: 
+          this.head.x += this.head.width;
+        case 3:
+          this.head.y += this.head.height;
+      }
+    }
+
+    document.onkeydown = function(e){
+      e = e || window.event;
+      console.log(e.keyCode)
+      console.log(snake)
+      switch(e.keyCode){
+        case 37:
+          snake.direction = snake.direction===2?2:0;
+          snake.moveSnake();
+          break;
+        case 38:
+          snake.direction = snake.direction===3?3:1;
+          break;
+        case 39:
+          snake.direction = snake.direction===0?0:2;
+          break;
+        case 40:
+          snake.direction = snake.direction===1?1:3;
+          break;
+      }
+    }
+
+    const snake = new Snake(6);
+    snake.direction = 2;
+    snake.draw();
+    function animate(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      snake.moveSnake();
+      snake.draw();
+    }
+    var timer = setInterval(()=>{
+      animate();
+    },500)
+
+  </script>
+</body>
+</html>
