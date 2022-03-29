@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="cavsElem"></canvas>
+    <script>
+        var canvas = document.querySelector("#cavsElem");
+        console.log("ca ",canvas)
+        var ctx = canvas.getContext('2d');
+        canvas.width = 900; //设置标签的属性宽高
+        canvas.height = 600; //千万不要用 canvas.style.height
+        canvas.style.border = '1px solid #000';
+        ctx.strokeStyle = "#9013FE"
+        // ctx.beginPath(); //开始路径
+        // ctx.moveTo(100, 100); //三角形，左顶点
+        // ctx.lineTo(300, 100); //右顶点
+        // ctx.lineTo(300, 300); //底部的点
+        // ctx.closePath(); //结束路径
+        // ctx.stroke(); //描边路径
+
+        // ctx.rect(400,400,100,100)
+        // ctx.stroke();
+
+        //ctx.strokeStyle="red"
+        //ctx.strokeRect(400,400,100,100);
+        // ctx.fillStyle = "orange"
+        // ctx.fillRect(400,400,100,100)
+
+        //绘制圆形（arc)
+        //arc() 方法创建弧/曲线（用于创建圆或部分圆）。
+        //ctx.arc(x,y,r,sAngle,eAngle,counterclockwise);
+        
+
+        // ctx.arc(400,400,30,0,2*Math.PI,false);
+        // ctx.stroke();
+
+        const createBall = ()=>{    
+            const x = Math.random()*900;
+            const y = Math.random()*900;
+            const r = Math.random()*100;
+            ctx.save();
+            ctx.beginPath();
+       // ctx.createLinearGradient(x0,y0,x1,y1); //参数：x0,y0 起始坐标，x1,y1 结束坐标
+            // var grd = ctx.createLinearGradient(0,0,170,0);
+            // grd.addColorStop(0,'pink');
+            // grd.addColorStop(1,'purple');
+        //ctx.createRadialGradient(x0,y0,r0,x1,y1,r1);
+            var grd = ctx.createRadialGradient(300,300,10,300,300,200);
+            grd.addColorStop(0,'pink');
+            grd.addColorStop(0.6,'purple');
+            grd.addColorStop(1,'grey');
+            ctx.fillStyle = grd;
+            ctx.arc(x,y,r,0,2*Math.PI,false);
+            ctx.shadowColor='green';
+            ctx.shadowBlur=5;
+            ctx.shadowOffsetX=1;
+            ctx.shadowOffsetY=1;
+            ctx.fill();
+            ctx.closePath();
+            ctx.restore();
+        }
+        setInterval(()=>{
+            console.log("dfsdf")
+            createBall();
+        },1000)
+
+
+        // var grd = ctx.createLinearGradient(400,400,500,500);
+        // grd.addColorStop(0,'pink');
+        // grd.addColorStop(.5,'red');
+        // grd.addColorStop(1,'grey');
+        // ctx.rect(400,400,100,100);
+        // ctx.fillStyle = grd;
+        // ctx.fill();
+
+    </script>
+</body>
+</html>
