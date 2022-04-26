@@ -185,18 +185,60 @@ createInstance(Lion).keeper.nametag;  // typechecks!
 createInstance(Bee).keeper.hasMask;   // typechecks!
 
 
+function test2<Type>(arg:Type):Type{
+    return arg;
+}
+
+const output2 = test2<string>("s");
+
+
+let mytest:<Input>(arg:Input)=>Input = test2;
+let mytest2:{
+    <Input>(arg:Input):Input
+} = identity
+
+interface GIdentityFn{
+    <Type>(arg:Type):Type
+}
+
+let interfaceTest:GIdentityFn = identity;
+
+//move the generic parameter to be a parameter of the whole interface
+interface GIdentityFn2<Type>{
+    (arg:Type):Type
+}
+let interfaceTest2:GIdentityFn2<number> = identity;
+
+
+//Generic Class
+class GenericN<NumType>{
+    zeroValue:NumType;
+    add:(x:NumType,y:NumType) =>NumType
+}
+let myGenericNumber2 = new GenericN<number>();
+myGenericNumber2.zeroValue = 0;
+myGenericNumber2.add = function(x,y){return x+y}
+
+//Generic Constrains
+function lIdentity<Type extends Lengthwise>(arg:Type):Type{
+    console.log(arg.length)
+    return arg;
+}
 
 
 
+//Using Type Parameters in Generic Constraints
+function gProperty<Type,Key extends keyof Type>(obj:Type,key:Key){
+    return obj[key]
+};
+
+let x2 = { a: "1", b: 2, c: 3, d: 4 };
+const res = gProperty(x2, "a");//string
+const res2 = gProperty(x2,"b");//number
+gProperty(x2, "m");
 
 
 
-
-
-
-
-
-
-
-
-
+function createInsteance<A extends Animal>(c:new ()=>A):A{
+    return new c()
+}
