@@ -7,6 +7,6 @@ const fn = (v: boolean) => {
       return 2
   }
   
-  type a = MyReturnType<typeof fn> // should be "1 | 2"
+  type dd = MyReturnType<typeof fn> // should be "1 | 2"
 
   type MyReturnType<T> = T extends (...args:any)=>infer K ? K:never;
