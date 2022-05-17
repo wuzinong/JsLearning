@@ -73,7 +73,8 @@
           "@study/root-config": "//localhost:9000/study-root-config.js",
           "@study/bran": "//localhost:9001/study-bran.js",
           "@study/todos": "//localhost:9002/study-todos.js",
-          "@study/testvue": "//localhost:9003/js/app.js"
+          "@study/testvue": "//localhost:9003/js/app.js",
+          "@study/navbar": "//localhost:9004/study-navbar.js"
         }
       }
     </script>
@@ -89,6 +90,7 @@
     <% if (isLocal) { %>
     <script src="http://localhost:9100/system.js"></script>
     <script src="http://localhost:9100/amd.js"></script>
+    <!-- <script src="http://localhost:9100/named-exports.js"></script> -->
     <!-- <script>
       (function () {
         const originalInstantiate = System.constructor.prototype.instantiate;
@@ -113,11 +115,11 @@
   </head>
   <body>
     <noscript> You need to enable JavaScript to run this app. </noscript>
-    <main>
+    <!-- <main>
       <a href="/bran">Pure javascript</a> &nbsp;&nbsp;
       <a href="/todos">React</a>&nbsp;&nbsp;
       <a href="/testvue">Vue</a>
-    </main>
+    </main> -->
     <div id="brancontainer"></div>
     <div id="reactroot"></div>
     <script>

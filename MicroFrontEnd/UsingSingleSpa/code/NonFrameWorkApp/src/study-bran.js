@@ -13,5 +13,5 @@ export const mount = async function () {
 };
 
 export const unmount = async function () {
-  console.log("卸载中...");
+  document.querySelector("#brancontainer").innerHTML = "";
 };

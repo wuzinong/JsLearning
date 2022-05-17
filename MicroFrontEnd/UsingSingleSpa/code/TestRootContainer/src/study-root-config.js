@@ -14,7 +14,8 @@ registerApplication({
   app: () => {
     return System.import("@study/bran");
   },
-  activeWhen: ["/bran"],
+  // activeWhen: ["/bran"],
+  activeWhen: (location) => location.pathname === "/bran",
 });
 
 registerApplication({

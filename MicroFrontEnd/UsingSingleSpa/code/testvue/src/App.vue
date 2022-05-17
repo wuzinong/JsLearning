@@ -1,25 +1,48 @@
 <template>
   <div id="app">
+    <Parcel :config="parcelConfig" :mountParcel="mountParcel" />
     <div class="example">
       <router-link to="/foo">foo</router-link>&nbsp;&nbsp;
       <router-link to="/bar">bar</router-link>
     </div>
     <router-view></router-view>
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
-<!-- <script>
-import HelloWorld from "./components/HelloWorld.vue";
+<script>
+import Parcel from "single-spa-vue/parcel";
+import { mountRootParcel } from "single-spa";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    // HelloWorld,
+    Parcel,
+  },
+  data() {
+    return {
+      parcelConfig: window.System.import("@study/navbar"),
+      mountParcel: mountRootParcel,
+    };
+  },
+  methods: {
+    // These are the props passed into the parcel
+    getParcelProps() {
+      return {
+        text: `Hello world`,
+      };
+    },
+    // Parcels mount asynchronously, so this will be called once the parcel finishes mounting
+    parcelMounted() {
+      console.log("parcel mounted");
+    },
+    parcelUpdated() {
+      console.log("parcel updated");
+    },
   },
 };
-</script> -->
+</script>
 
 <style>
 #app {
