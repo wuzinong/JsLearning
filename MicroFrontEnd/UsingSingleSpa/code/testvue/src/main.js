@@ -1,13 +1,30 @@
-import Vue from 'vue';
-import singleSpaVue from 'single-spa-vue';
+import Vue from "vue";
+import VueRouter from "vue-router";
+import singleSpaVue from "single-spa-vue";
 
-import App from './App.vue';
+import App from "./App.vue";
+
+Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
 
+const Foo = { template: "<div>Foo component</div>" };
+const Bar = { template: "<div>Ｂａｒ</div>" };
+
+const routes = [
+  { path: "/foo", component: Foo },
+  { path: "/bar", component: Bar },
+];
+
+const router = new VueRouter({
+  routes,
+  mode: "history",
+  base: "/testvue",
+});
 const vueLifecycles = singleSpaVue({
   Vue,
   appOptions: {
+    router,
     render(h) {
       return h(App, {
         props: {

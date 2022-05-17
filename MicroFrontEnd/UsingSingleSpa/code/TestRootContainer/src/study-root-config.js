@@ -30,7 +30,7 @@ registerApplication({
   app: () => {
     return System.import("@study/testvue");
   },
-  activeWhen: ["/vue"],
+  activeWhen: ["/testvue"],
 });
 
 // registerApplication({
