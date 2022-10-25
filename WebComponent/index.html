@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .ttt {
+        color: red !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ttt">Global style</div>
+    <template id="brantest">
+      <style>
+        p {
+          background-color: black;
+          color: white;
+        }
+        div {
+          width: 200px;
+          background-color: green;
+          border: 5px solid grey;
+          border-radius: 5px;
+        }
+      </style>
+      <div>
+        <p>bing.com</p>
+        <p class="ttt">baidu.com</p>
+      </div>
+      <script>
+        function foo() {
+          if (!window.myfoo) {
+            window.myfoo = "myfoo";
+            console.log("setting new myfoo");
+          } else {
+            console.log("myfoo is aleady there");
+          }
+
+          console.log("inner log");
+        }
+        foo();
+      </script>
+    </template>
+    <script>
+      class BranTest extends HTMLElement {
+        constructor() {
+          super();
+          const content = document.querySelector("#brantest").content;
+          console.log("content ", content);
+          const shadowDom = this.attachShadow({ mode: "open" });
+          shadowDom.appendChild(content.cloneNode(true));
+        }
+      }
+      customElements.define("bran-test", BranTest);
+    </script>
+
+    <bran-test></bran-test>
+    <div>
+      <p>bing2.com</p>
+      <p>baidu2.com</p>
+    </div>
+    <bran-test></bran-test>
+  </body>
+  <script>
+    foo();
+  </script>
+</html>
