@@ -4,3 +4,10 @@ Svelte
 Vue
 Hot module reload
 Babel loaders
+Micro front end
+SSR
+Unit test
+RXJS
+Map
+Chart
+Components (Tree, drag drop etc?)
