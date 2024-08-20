@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+    <!-- have a button POST a click via AJAX -->
+    <button hx-post="/baidu.com" hx-swap="outerHTML">Click Me</button>
+    <p hidden>
+      ⛔ Your browser doesn't support <code>shadowrootmode</code> attribute yet.
+    </p>
+    <article>
+      <style>
+        p {
+          padding: 8px;
+          background-color: wheat;
+        }
+      </style>
+      <p>I'm in the DOM.</p>
+    </article>
+    <article>
+      <template shadowrootmode="close">
+        <style>
+          p {
+            padding: 8px;
+            background-color: plum;
+          }
+        </style>
+        <p>I'm in the shadow DOM.</p>
+      </template>
+    </article>
+  </body>
+</html>
