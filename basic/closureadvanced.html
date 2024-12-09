@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">button</button>
+    <script>
+      var btn = document.getElementById('btn');
+      console.log(performance.memory);
+      btn.addEventListener('click', function () {
+        function createClosure() {
+          const big = [];
+
+          console.log('starting');
+          for (let i = 0; i < 6553555; i++) {
+            big.push(i);
+          }
+          const small = 's';
+
+          function useBig() {
+            console.log(big);
+          }
+          function useSmall() {
+            console.log(small);
+          }
+
+          return useSmall;
+        }
+
+        const small = createClosure()();
+        console.log(small);
+        console.log(performance.memory);
+      });
+    </script>
+  </body>
+</html>
