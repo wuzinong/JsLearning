@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "16.4.1",
-    "react-dom": "16.4.1",
+    "react-dom": "16.4.2",
     "aspnet-prerendering": "3.0.1",
     "domain-task": "3.0.3",
     "redux-little-router": "15.1.1"
