@@ -24,3 +24,5 @@ ignored: ['!**/node_modules/my-component/**'],
 optimizeDeps: {
 exclude: ['my-component'],
 },
+
+//如果还有缓存，那就是浏览器缓存，记得 clear
